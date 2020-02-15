@@ -1,0 +1,156 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.orchid.music"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="28"
+9        android:targetSdkVersion="29" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\Users\KIIT\Desktop\music\android\app\src\debug\AndroidManifest.xml:6:5-66
+14-->C:\Users\KIIT\Desktop\music\android\app\src\debug\AndroidManifest.xml:6:22-64
+15    <!--
+16     io.flutter.app.FlutterApplication is an android.app.Application that
+17         calls FlutterMain.startInitialization(this); in its onCreate method.
+18         In most cases you can leave this as-is, but you if you want to provide
+19         additional functionality it is fine to subclass or reimplement
+20         FlutterApplication and put your custom class here.
+21    -->
+22    <!-- Pemissons -->
+23    <uses-permission android:name="android.permission.READ_CALENDAR" />
+23-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:10:5-72
+23-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:10:22-69
+24    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+24-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:11:5-73
+24-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:11:22-70
+25    <uses-permission android:name="android.permission.CAMERA" />
+25-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:12:5-65
+25-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:12:22-62
+26    <uses-permission android:name="android.permission.READ_CONTACTS" />
+26-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:13:5-72
+26-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:13:22-69
+27    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+27-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:14:5-73
+27-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:14:22-70
+28    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+28-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:15:5-71
+28-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:15:22-68
+29    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+29-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:16:5-79
+29-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:16:22-76
+30    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+30-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:17:5-81
+30-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:17:22-78
+31    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+31-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:18:5-71
+31-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:18:22-68
+32    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+32-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:19:5-75
+32-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:19:22-72
+33    <uses-permission android:name="android.permission.CALL_PHONE" />
+33-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:20:5-69
+33-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:20:22-66
+34    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+34-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:21:5-72
+34-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:21:22-69
+35    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+35-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:22:5-73
+35-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:22:22-70
+36    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+36-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:11:5-73
+36-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:11:22-70
+37    <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
+37-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:24:5-72
+37-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:24:22-69
+38    <uses-permission android:name="android.permission.USE_SIP" />
+38-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:25:5-66
+38-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:25:22-63
+39    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+39-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:26:5-81
+39-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:26:22-78
+40    <uses-permission android:name="android.permission.BODY_SENSORS" />
+40-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:27:5-71
+40-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:27:22-68
+41    <uses-permission android:name="android.permission.SEND_SMS" />
+41-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:28:5-67
+41-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:28:22-64
+42    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+42-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:29:5-70
+42-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:29:22-67
+43    <uses-permission android:name="android.permission.READ_SMS" />
+43-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:30:5-67
+43-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:30:22-64
+44    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
+44-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:31:5-75
+44-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:31:22-72
+45    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+45-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:32:5-70
+45-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:32:22-67
+46    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+46-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:33:5-80
+46-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:33:22-77
+47    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+47-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:34:5-81
+47-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:34:22-78
+48
+49    <application
+49-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:36:5-57:19
+50        android:name="io.flutter.app.FlutterApplication"
+50-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:37:9-57
+51        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+51-->[androidx.core:core:1.0.0] C:\Users\KIIT\.gradle\caches\transforms-2\files-2.1\7faf2ad74a0b9932e38d86e684646e95\core-1.0.0\AndroidManifest.xml:22:18-86
+52        android:debuggable="true"
+53        android:icon="@mipmap/ic_launcher"
+53-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:39:9-43
+54        android:label="music" >
+54-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:38:9-30
+55        <activity
+55-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:40:9-51:20
+56            android:name="com.orchid.music.MainActivity"
+56-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:41:13-41
+57            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+57-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:44:13-163
+58            android:hardwareAccelerated="true"
+58-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:45:13-47
+59            android:launchMode="singleTop"
+59-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:42:13-43
+60            android:theme="@style/LaunchTheme"
+60-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:43:13-47
+61            android:windowSoftInputMode="adjustResize" >
+61-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:46:13-55
+62            <intent-filter>
+62-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:47:13-50:29
+63                <action android:name="android.intent.action.MAIN" />
+63-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:48:17-68
+63-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:48:25-66
+64
+65                <category android:name="android.intent.category.LAUNCHER" />
+65-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:49:17-76
+65-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:49:27-74
+66            </intent-filter>
+67        </activity>
+68        <!--
+69             Don't delete the meta-data below.
+70             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+71        -->
+72        <meta-data
+72-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:54:9-56:33
+73            android:name="flutterEmbedding"
+73-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:55:13-44
+74            android:value="2" />
+74-->C:\Users\KIIT\Desktop\music\android\app\src\main\AndroidManifest.xml:56:13-30
+75
+76        <activity
+76-->[com.nabinbhandari.android:permissions:3.8] C:\Users\KIIT\.gradle\caches\transforms-2\files-2.1\300cd0e93c629b750aad6882f7163e82\permissions-3.8\AndroidManifest.xml:12:9-14:67
+77            android:name="com.nabinbhandari.android.permissions.PermissionsActivity"
+77-->[com.nabinbhandari.android:permissions:3.8] C:\Users\KIIT\.gradle\caches\transforms-2\files-2.1\300cd0e93c629b750aad6882f7163e82\permissions-3.8\AndroidManifest.xml:13:13-85
+78            android:theme="@style/Permissions.TransparentTheme" />
+78-->[com.nabinbhandari.android:permissions:3.8] C:\Users\KIIT\.gradle\caches\transforms-2\files-2.1\300cd0e93c629b750aad6882f7163e82\permissions-3.8\AndroidManifest.xml:14:13-64
+79    </application>
+80
+81</manifest>
