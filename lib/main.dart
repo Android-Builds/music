@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:permission/permission.dart';
-import 'package:storage_path/storage_path.dart';
-
+import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music/playlists.dart';
 import 'floating_search.dart';
 
 void main() => runApp(MyApp());
@@ -45,7 +44,22 @@ class _MyHomePageState extends State<MyHomePage> {
   final duplicateItems = List<String>.generate(100, (i) => "Item $i");
   var items = List<String>();
 
-  var imagePath;
+  List<SongInfo> songs;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
@@ -57,30 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> getSongs() async {
-     try {
-      imagePath = await StoragePath.imagesPath; //contains images path and folder name in json format
-    } catch(PlatformException) {
-      imagePath = 'Failed to get path';
-    }
+  getSongs() async {
+    final FlutterAudioQuery audioQuery = new FlutterAudioQuery();
+    songs = await audioQuery.getSongs();
   }
 
   @override
   void initState() {
     items.addAll(duplicateItems);
     getSongs();
-    _checkPermissions();
     super.initState();
-  }
-
-    bool externalStoragePermissionOkay = false;
-
-  _checkPermissions() async {
-    var permissions = await Permission.getPermissionsStatus(
-      [PermissionName.Storage]);
-    var permissionNames = await Permission.requestPermissions(
-      [PermissionName.Storage]);
-    //Permission.openSettings;
   }
 
   void filterSearchResults(String query) {
@@ -108,40 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(imagePath);
+    print(songs);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
           color: Theme.of(context).backgroundColor,
-          child: FloatSearchBar.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                child: ListTile(
-                  leading: Text(
-                    '${items[index]}',
-                    style: TextStyle(
-                    ),
-                  ),
-                ),
-              );
-            },
-            trailing: Icon(Icons.sort),
-            drawer: Drawer(
-              child: Container(
-                color: Theme.of(context).backgroundColor,
-              ),
-            ),
-            onChanged: (String value) {
-              filterSearchResults(value);
-            },
-            onTap: () {},
-            decoration: InputDecoration.collapsed(
-              fillColor: Theme.of(context).backgroundColor,
-              filled: true,
-              hintText: "Search...",
-            ),
+          child: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(

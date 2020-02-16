@@ -68,6 +68,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_audio_query",
+      "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_audio_query-0.3.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_icons",
       "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_icons-1.0.0+1",
       "packageUri": "lib/",
@@ -110,12 +116,6 @@
       "languageVersion": "2.1"
     },
     {
-      "name": "permission",
-      "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/permission-0.1.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "petitparser",
       "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/petitparser-2.4.0",
       "packageUri": "lib/",
@@ -144,12 +144,6 @@
       "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/stack_trace-1.9.3",
       "packageUri": "lib/",
       "languageVersion": "1.23"
-    },
-    {
-      "name": "storage_path",
-      "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/storage_path-0.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
     },
     {
       "name": "stream_channel",
@@ -200,7 +194,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-15T12:01:50.193312Z",
+  "generated": "2020-02-16T04:05:52.450368Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.0.0.flutter-c547f5d933"
 }

@@ -1,0 +1,36 @@
+FloatSearchBar.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: _widgetOptions.elementAt(_selectedIndex),
+                    ),
+                    ListTile(
+                      leading: Text(
+                        '${items[index]}',
+                        style: TextStyle(
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            trailing: Icon(Icons.sort),
+            drawer: Drawer(
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+              ),
+            ),
+            onChanged: (String value) {
+              filterSearchResults(value);
+            },
+            onTap: () {},
+            decoration: InputDecoration.collapsed(
+              fillColor: Theme.of(context).backgroundColor,
+              filled: true,
+              hintText: "Search...",
+            ),
+          ),
