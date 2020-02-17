@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:music/playlists.dart';
+import 'package:music/settings.dart';
 import 'floating_search.dart';
 
 void main() => runApp(MyApp());
@@ -44,16 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final duplicateItems = List<String>.generate(100, (i) => "Item $i");
   var items = List<String>();
 
-  List<SongInfo> songs;
+  static List<SongInfo> songs;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+  static List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 1: Business',
       style: optionStyle,
+    ),
+    Container(
+      child: Text('HI'),
     ),
     Text(
       'Index 2: School',
@@ -112,6 +112,47 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(),
+        drawer: Drawer(
+          child: Container(
+            color: Theme.of(context).backgroundColor,
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  height: 150.0,
+                  child: DrawerHeader(
+                    child: Text(
+                      'Walls',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                  },
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  title: Text(
+                    'Settings',
+                    style: TextStyle(
+                      color: getColor(context),
+                    ),
+                    ),
+                  trailing: Icon(
+                    Icons.settings,
+                    color: getColor(context),
+                    ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: Container(
           color: Theme.of(context).backgroundColor,
           child: Center(

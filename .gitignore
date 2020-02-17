@@ -5,4 +5,4 @@
 *.uxt
 .dart_tool
 .idea
-build
+build/
