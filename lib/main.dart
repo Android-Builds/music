@@ -1,8 +1,6 @@
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
-import 'package:music/playlists.dart';
 import 'package:music/settings.dart';
-import 'floating_search.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,15 +43,34 @@ class _MyHomePageState extends State<MyHomePage> {
   final duplicateItems = List<String>.generate(100, (i) => "Item $i");
   var items = List<String>();
 
-  static List<SongInfo> songs;
+  List<Song> _songs;
 
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
+    Container(
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index){
+        return ListTile(
+          contentPadding: EdgeInsets.all(20.0),
+          leading: CircleAvatar(
+            child: Text('p'),
+          ),
+          title: Text(
+            'This is the title',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
+      }),
     ),
     Container(
-      child: Text('HI'),
+      child: Text(
+        'HI',
+        style: TextStyle(
+          color: Colors.white
+        ),
+      ),
     ),
     Text(
       'Index 2: School',
@@ -63,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -72,8 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   getSongs() async {
-    final FlutterAudioQuery audioQuery = new FlutterAudioQuery();
-    songs = await audioQuery.getSongs();
+    var songs = await MusicFinder.allSongs();
+    songs = new List.from(songs);
+    setState(() {
+      _songs = songs;
+    });
   }
 
   @override
@@ -108,7 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(songs);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,

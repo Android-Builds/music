@@ -62,6 +62,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "flute_music_player",
+      "rootUri": "file:///C:/Users/KIIT/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flute_music_player-0.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -194,7 +200,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-16T04:05:52.450368Z",
+  "generated": "2020-02-17T16:19:05.180261Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.0.0.flutter-c547f5d933"
 }

@@ -13,6 +13,7 @@ dependencies:
   flutter_icons:
   floating_search_bar:
   flutter_audio_query:
+  flute_music_player:
 
 dev_dependencies:
   flutter_test:
