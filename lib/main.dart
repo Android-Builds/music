@@ -43,20 +43,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final duplicateItems = List<String>.generate(100, (i) => "Item $i");
   var items = List<String>();
 
-  List<Song> _songs;
+  static List<Song> _songs = [];
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: _songs.length,
         itemBuilder: (context, index){
         return ListTile(
           contentPadding: EdgeInsets.all(20.0),
           leading: CircleAvatar(
-            child: Text('p'),
+            child: Text(_songs[index].title),
           ),
           title: Text(
-            'This is the title',
+            _songs[index].title[0],
             style: TextStyle(
               color: Colors.white,
             ),
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  getSongs() async {
+  void getSongs() async {
     var songs = await MusicFinder.allSongs();
     songs = new List.from(songs);
     setState(() {
@@ -98,9 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    super.initState();
     items.addAll(duplicateItems);
     getSongs();
-    super.initState();
   }
 
   void filterSearchResults(String query) {
@@ -174,9 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Container(
           color: Theme.of(context).backgroundColor,
-          child: Center(
-            child: _widgetOptions.elementAt(_selectedIndex),
-          ),
+          child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 0.0,
