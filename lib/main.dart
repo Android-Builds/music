@@ -1,6 +1,6 @@
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:music/settings.dart';
+import 'package:music/songs_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -43,26 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final duplicateItems = List<String>.generate(100, (i) => "Item $i");
   var items = List<String>();
 
-  static List<Song> _songs = [];
+  // static List<Song> _songs = [];
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(
-      child: ListView.builder(
-        itemCount: _songs.length,
-        itemBuilder: (context, index){
-        return ListTile(
-          contentPadding: EdgeInsets.all(20.0),
-          leading: CircleAvatar(
-            child: Text(_songs[index].title),
-          ),
-          title: Text(
-            _songs[index].title[0],
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        );
-      }),
+      child: SongsList(),
     ),
     Container(
       child: Text(
@@ -88,19 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void getSongs() async {
-    var songs = await MusicFinder.allSongs();
-    songs = new List.from(songs);
-    setState(() {
-      _songs = songs;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     items.addAll(duplicateItems);
-    getSongs();
   }
 
   void filterSearchResults(String query) {
