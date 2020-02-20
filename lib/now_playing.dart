@@ -1,5 +1,6 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({@required this.song});
@@ -30,6 +31,11 @@ class _NowPlayingState extends State<NowPlaying> {
     audioPlayer.seek(second);
   }
 
+  getDuration(int seconds){
+    Duration duration = new Duration(seconds: seconds);
+    return duration;
+  }
+
   @override
   void initState(){
     super.initState();
@@ -51,8 +57,40 @@ class _NowPlayingState extends State<NowPlaying> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            height: 500.0,
+          Padding(
+            padding: const EdgeInsets.only(top: 50.0),
+            child: Container(
+              height: 250.0,
+              child: Container(
+                width: 250,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 50.0),
+          Column(
+            children: <Widget>[
+              Text(
+                widget.song.title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 50.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(getDuration(_position.inSeconds).toString().substring(3, 7)),
+              SizedBox(width: 320.0),
+              Text(getDuration(_duration.inSeconds).toString().substring(3, 7)),
+            ],
           ),
           Slider(
             value: _position.inSeconds.toDouble(),
@@ -65,25 +103,52 @@ class _NowPlayingState extends State<NowPlaying> {
               });
             },
           ),
-          IconButton(
-            icon: playIcon,
-            iconSize: 40.0,
-            padding: EdgeInsets.all(0), 
-            alignment: Alignment.center,
-            onPressed: () {  
-              if(playing){
-                setState(() {
-                  playIcon = Icon(Icons.play_arrow);
-                });
-                pause();
-              } else {
-                setState(() {
-                  playIcon = Icon(Icons.pause);
-                });
-                audioPlayer.play(widget.song.uri);
-              }
-              playing = !playing;
-            },
+          SizedBox(height: 40.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Feather.repeat),
+                iconSize: 20.0,
+              ),
+              SizedBox(width: 20.0),
+              IconButton(
+                icon: Icon(Icons.skip_previous),
+                iconSize: 30.0,
+              ),
+              SizedBox(width: 20.0),
+              IconButton(
+                icon: playIcon,
+                iconSize: 30.0,
+                padding: EdgeInsets.all(0), 
+                alignment: Alignment.center,
+                onPressed: () {  
+                  if(playing){
+                    setState(() {
+                      playIcon = Icon(Icons.play_arrow);
+                    });
+                    pause();
+                  } else {
+                    setState(() {
+                      playIcon = Icon(Icons.pause);
+                    });
+                    audioPlayer.play(widget.song.uri);
+                  }
+                  playing = !playing;
+                },
+              ),
+              SizedBox(width: 20.0),
+              IconButton(
+                icon: Icon(Icons.skip_next),
+                iconSize: 30.0,
+              ),
+              SizedBox(width: 20.0),
+              IconButton(
+                icon: Icon(Entypo.shuffle),
+                iconSize: 20.0,
+              )
+            ],
           ),
         ],
       )

@@ -1,6 +1,9 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 import 'package:music/now_playing.dart';
 
 class SongsList extends StatefulWidget {
@@ -36,7 +39,6 @@ class _SongsListState extends State<SongsList> {
     final result = await audioPlayer.play(uri, isLocal: true);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,8 +68,7 @@ class _SongsListState extends State<SongsList> {
                   return ListTile(
                     contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
                     leading: CircleAvatar(
-                      child: Text(songs[index].title[0]),
-                    ),
+                      child: songs[index].albumArt != null ? Image.file(File(songs[index].albumArt)): Icon(Icons.music_note)),
                     title: Text(songs[index].title),
                     onTap: () => Navigator.push(context, MaterialPageRoute(
                       builder: (context) => NowPlaying(

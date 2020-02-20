@@ -13,6 +13,8 @@ dependencies:
   flutter_icons:
   floating_search_bar:
   flute_music_player:
+  flutter_absolute_path:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

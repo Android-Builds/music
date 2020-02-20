@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:music/now_playing.dart';
 import 'package:music/settings.dart';
 import 'package:music/songs_list.dart';
 
@@ -150,7 +152,38 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Container(
           color: Theme.of(context).backgroundColor,
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: Column(
+            children: <Widget>[
+              _widgetOptions.elementAt(_selectedIndex),
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: GestureDetector(
+                    // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NowPlaying())),
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(width: 100),
+                          Text('Hi'),
+                          SizedBox(width: 240),
+                          IconButton(
+                            icon: Icon(Feather.play_circle)
+                          )
+                        ],
+                      ),
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(50.0),
+                          topLeft: Radius.circular(50.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 0.0,
