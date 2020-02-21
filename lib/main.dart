@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: GestureDetector(
-                    // onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NowPlaying())),
+                    onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NowPlaying())),
                     child: Container(
                       child: Row(
                         children: <Widget>[
@@ -167,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Text('Hi'),
                           SizedBox(width: 240),
                           IconButton(
+                            onPressed: (){},
                             icon: Icon(Feather.play_circle)
                           )
                         ],

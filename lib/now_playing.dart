@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class NowPlaying extends StatefulWidget {
-  NowPlaying({@required this.song});
+  NowPlaying({this.uri, this.song});
   final Song song;
+  final String uri;
   @override
   _NowPlayingState createState() => _NowPlayingState();
 }
@@ -39,6 +40,10 @@ class _NowPlayingState extends State<NowPlaying> {
   @override
   void initState(){
     super.initState();
+    initPlayer();
+  }
+
+  void initPlayer(){
     audioPlayer = new MusicFinder();
     audioPlayer.durationHandler = (d) => setState(() {
       _duration = d;
@@ -47,7 +52,12 @@ class _NowPlayingState extends State<NowPlaying> {
       _position = p;
     });
     audioPlayer.stop();
-    _playLocal(widget.song.uri);
+    if(widget.song != null){
+      _playLocal(widget.song.uri);
+    } else {
+      audioPlayer.play(widget.uri);
+    }
+    
     playing = true;
   }
 
@@ -96,7 +106,13 @@ class _NowPlayingState extends State<NowPlaying> {
             value: _position.inSeconds.toDouble(),
             min: 0,
             max: _duration.inSeconds.toDouble(),
-            onChanged: (double value) {
+            onChangeEnd: (value) {
+              setState(() {
+                seekToSecond(value);
+                value = value;
+              });
+            },
+            onChanged: (value) {
               setState(() {
                 seekToSecond(value);
                 value = value;

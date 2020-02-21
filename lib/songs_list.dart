@@ -35,10 +35,6 @@ class _SongsListState extends State<SongsList> {
     });
   }
 
-  Future _playLocal(String uri) async {
-    final result = await audioPlayer.play(uri, isLocal: true);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,14 +64,17 @@ class _SongsListState extends State<SongsList> {
                   return ListTile(
                     contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
                     leading: CircleAvatar(
-                      child: songs[index].albumArt != null ? Image.file(File(songs[index].albumArt)): Icon(Icons.music_note)),
+                      child: songs[index].albumArt != null ? Image.file(File(songs[index].albumArt)): Icon(Icons.music_note),
+                    ),
                     title: Text(songs[index].title),
-                    onTap: () => Navigator.push(context, MaterialPageRoute(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
                       builder: (context) => NowPlaying(
                         song: songs[index],
                         ),
-                      ),
-                    ),
+                      )
+                    );
+                    }
                   );
                 }
               ),
