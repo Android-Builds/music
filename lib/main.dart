@@ -1,3 +1,4 @@
+import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/now_playing.dart';
@@ -109,80 +110,101 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(),
-        drawer: Drawer(
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            child: ListView(
-              children: <Widget>[
-                Container(
-                  height: 150.0,
-                  child: DrawerHeader(
-                    child: Text(
-                      'Walls',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
-                  },
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: getColor(context),
-                    ),
-                    ),
-                  trailing: Icon(
-                    Icons.settings,
-                    color: getColor(context),
-                    ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // appBar: AppBar(),
+        // drawer: Drawer(
+        //   child: Container(
+        //     color: Theme.of(context).backgroundColor,
+        //     child: ListView(
+        //       children: <Widget>[
+        //         Container(
+        //           height: 150.0,
+        //           child: DrawerHeader(
+        //             child: Text(
+        //               'Walls',
+        //               style: TextStyle(
+        //                 color: Colors.white,
+        //                 fontSize: 20.0
+        //               ),
+        //             ),
+        //             decoration: BoxDecoration(
+        //               color: Colors.blue,
+        //             ),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           onTap: () {
+        //             Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+        //           },
+        //           contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        //           title: Text(
+        //             'Settings',
+        //             style: TextStyle(
+        //               color: getColor(context),
+        //             ),
+        //             ),
+        //           trailing: Icon(
+        //             Icons.settings,
+        //             color: getColor(context),
+        //             ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         body: Container(
           color: Theme.of(context).backgroundColor,
           child: Column(
             children: <Widget>[
-              _widgetOptions.elementAt(_selectedIndex),
-              Expanded(
-                child: Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NowPlaying())),
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          SizedBox(width: 100),
-                          Text('Hi'),
-                          SizedBox(width: 240),
-                          IconButton(
-                            onPressed: (){},
-                            icon: Icon(Feather.play_circle)
-                          )
-                        ],
-                      ),
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(50.0),
-                          topLeft: Radius.circular(50.0),
-                        ),
-                      ),
+                    Flexible(
+                                          child: FloatingSearchBar.builder(
+        itemCount: 100,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Text(index.toString()),
+          );
+        },
+        trailing: CircleAvatar(
+          child: Text("RD"),
+        ),
+        drawer: Drawer(
+          child: Container(),
+        ),
+        onChanged: (String value) {},
+        onTap: () {},
+        decoration: InputDecoration.collapsed(
+          hintText: "Search...",
+        ),
+      ),
                     ),
-                  ),
-                ),
-              )
+              // _widgetOptions.elementAt(_selectedIndex),
+              // Expanded(
+              //   child: Align(
+              //     alignment: FractionalOffset.bottomCenter,
+              //     child: GestureDetector(
+              //       onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NowPlaying())),
+              //       child: Container(
+              //         child: Row(
+              //           children: <Widget>[
+              //             SizedBox(width: 100),
+              //             Text('Hi'),
+              //             SizedBox(width: 240),
+              //             IconButton(
+              //               onPressed: (){},
+              //               icon: Icon(Feather.play_circle)
+              //             )
+              //           ],
+              //         ),
+              //         height: 50.0,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.only(
+              //             topRight: Radius.circular(50.0),
+              //             topLeft: Radius.circular(50.0),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
