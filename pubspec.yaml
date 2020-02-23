@@ -15,6 +15,7 @@ dependencies:
   flute_music_player:
   flutter_absolute_path:
   path_provider:
+  quiver:
 
 dev_dependencies:
   flutter_test:
