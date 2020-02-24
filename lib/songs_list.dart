@@ -9,6 +9,8 @@ import 'package:music/song_model.dart';
 import 'package:quiver/strings.dart';
 
 class SongsList extends StatefulWidget {
+  SongsList({this.songmodel});
+  final songModel songmodel;
   @override
   _SongsListState createState() => _SongsListState();
 }
@@ -18,12 +20,12 @@ class _SongsListState extends State<SongsList> {
   List<Song> _songs;
   List<Song> duplicateSongs;
   MusicFinder audioPlayer;
-  songModel songmodel;
+  //songModel songmodel;
 
   @override
   void initState(){
     super.initState();
-    songmodel = new songModel();
+    //songmodel = new songModel();
     initSongs();
   }
 
@@ -37,7 +39,7 @@ class _SongsListState extends State<SongsList> {
     }
     duplicateSongs = songs;
     setState(() {
-     songmodel.duplicateSongs = songs;
+     widget.songmodel.duplicateSongs = songs;
     });
   }
 
@@ -66,7 +68,7 @@ class _SongsListState extends State<SongsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: getSongs(songmodel.duplicateSongs),
+      child: getSongs(widget.songmodel.duplicateSongs),
     );
   }
 
@@ -88,10 +90,10 @@ class _SongsListState extends State<SongsList> {
             ),
             title: Text(songs[index].title),
             onTap: () {
-              songmodel.currentSong = index;
+              widget.songmodel.currentSong = index;
               Navigator.push(context, MaterialPageRoute(
               builder: (context) => NowPlaying(
-                songmodel: songmodel,
+                songmodel: widget.songmodel,
                 ),
               )
             );

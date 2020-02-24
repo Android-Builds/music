@@ -1,7 +1,9 @@
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/now_playing.dart';
 import 'package:music/settings.dart';
+import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -47,10 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   var items = List<String>();
 
   // static List<Song> _songs = [];
+  static songModel songmodel;
+  MusicFinder audioPlayer;
+  bool playing = false;
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(
-      child: SongsList(),
+      child: SongsList(songmodel: songmodel,),
     ),
     Container(
       child: Text(
@@ -79,6 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    audioPlayer = new MusicFinder();
+    songmodel = new songModel();
     items.addAll(duplicateItems);
   }
 
@@ -105,6 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  playLocal(String uri) async {
+    final result = await audioPlayer.play(uri, isLocal: true);
+  }
+
+  pause() async {
+    final result = await audioPlayer.pause();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -115,6 +130,52 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Stack(
             children: <Widget>[
               _widgetOptions.elementAt(_selectedIndex),
+              SlidingUpPanel(
+                panel: Center(
+                  child: Text(
+                    "This is the sliding Widget",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                collapsed: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Hi',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    SizedBox(width: 100.0,),
+                    IconButton(
+                      icon: Icon(
+                        Feather.play_circle
+                      ),
+                      onPressed: () {
+                        if(playing){
+                          setState(() {
+                            //playIcon = Icon(Icons.play_arrow);
+                          });
+                          pause();
+                        } else {
+                            setState(() {
+                            //playIcon = Icon(Icons.pause);
+                          });
+                          audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
+                          }
+                        playing = !playing;
+                      },
+                    ),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(5.0),
+                minHeight: 50.0,
+                maxHeight: 800.0,
+              ),
             ],
           )
         ),

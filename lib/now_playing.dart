@@ -214,7 +214,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     setState(() {
                       playIcon = Icon(Icons.pause);
                     });
-                    audioPlayer.play(widget.song.uri);
+                    audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                   }
                   playing = !playing;
                 },
