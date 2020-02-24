@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/now_playing.dart';
 import 'package:music/settings.dart';
 import 'package:music/songs_list.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() => runApp(MyApp());
 
@@ -111,37 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
           color: Theme.of(context).backgroundColor,
-          child: Column(
+          child: Stack(
             children: <Widget>[
-              Flexible(child: _widgetOptions.elementAt(_selectedIndex)),
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: GestureDetector(
-                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NowPlaying())),
-                  child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(width: 100),
-                        Text('Hi'),
-                        SizedBox(width: 240),
-                        IconButton(
-                          onPressed: (){},
-                          icon: Icon(Feather.play_circle)
-                        )
-                      ],
-                    ),
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50.0),
-                        topLeft: Radius.circular(50.0),
-                      ),
-                    ),
-                  ),
-                ),
-              )
+              _widgetOptions.elementAt(_selectedIndex),
             ],
-          ),
+          )
         ),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 0.0,

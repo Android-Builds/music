@@ -14,6 +14,7 @@ dependencies:
   floating_search_bar:
   flute_music_player:
   quiver:
+  sliding_up_panel:
 
 dev_dependencies:
   flutter_test:

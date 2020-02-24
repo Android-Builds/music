@@ -1,20 +1,27 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:music/song_model.dart';
 
 class NowPlaying extends StatefulWidget {
-  NowPlaying({this.uri, this.song});
+  NowPlaying({this.uri, this.song, this.songmodel});
   final Song song;
   final String uri;
+  final songModel songmodel;
   @override
   _NowPlayingState createState() => _NowPlayingState();
 }
 
+enum PlayerState { stopped, playing, paused }
+
 class _NowPlayingState extends State<NowPlaying> {
   
   MusicFinder audioPlayer;
-  Duration _duration = new Duration();
-  Duration _position = new Duration();
+  Duration duration = new Duration();
+  Duration position = new Duration();
+  PlayerState playerState;
+  String title;
+  String artist;
 
   bool playing;
 
@@ -37,6 +44,16 @@ class _NowPlayingState extends State<NowPlaying> {
     return duration;
   }
 
+  void playPrevious() {
+    audioPlayer.stop();
+    widget.songmodel.getPrev();
+    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    setState(() {
+      title = widget.songmodel.songs[widget.songmodel.currentSong].title;
+      artist = widget.songmodel.songs[widget.songmodel.currentSong].title;
+    });
+  }
+
   @override
   void initState(){
     super.initState();
@@ -45,26 +62,59 @@ class _NowPlayingState extends State<NowPlaying> {
 
   void initPlayer(){
     audioPlayer = new MusicFinder();
-    audioPlayer.durationHandler = (d) => setState(() {
-      _duration = d;
+
+    title = widget.songmodel.songs[widget.songmodel.currentSong].title;
+    artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
+
+    audioPlayer.setDurationHandler((d) => setState(() {
+      duration = d;
+    }));
+
+    audioPlayer.setPositionHandler((p) => setState(() {
+        position = p;
+    }));
+
+    audioPlayer.setCompletionHandler(() {
+      onComplete();
+      setState(() {
+        position = duration;
+      });
     });
-    audioPlayer.positionHandler = (p) => setState(() {
-      _position = p;
+
+    audioPlayer.setErrorHandler((msg) {
+      setState(() {
+        playerState = PlayerState.stopped;
+        duration = new Duration(seconds: 0);
+        position = new Duration(seconds: 0);
+      });
     });
+
     audioPlayer.stop();
-    if(widget.song != null){
-      _playLocal(widget.song.uri);
-    } else {
-      audioPlayer.play(widget.uri);
-    }
+    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    // if(widget.song != null){
+    //   _playLocal(widget.song.uri);
+    // } else {
+    //   audioPlayer.play(widget.uri);
+    // }
     
     playing = true;
+  }
+
+  void onComplete() {
+    audioPlayer.stop();
+    widget.songmodel.getNext();
+    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    setState(() {
+      title = widget.songmodel.songs[widget.songmodel.currentSong].title;
+      artist = widget.songmodel.songs[widget.songmodel.currentSong].title;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
@@ -81,31 +131,45 @@ class _NowPlayingState extends State<NowPlaying> {
             ),
           ),
           SizedBox(height: 50.0),
-          Column(
-            children: <Widget>[
-              Text(
-                widget.song.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              )
-            ],
+                SizedBox(height: 20.0),
+                Text(
+                  artist,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
           ),
           SizedBox(height: 50.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(getDuration(_position.inSeconds).toString().substring(3, 7)),
+              Text(getDuration(position.inSeconds).toString().substring(3, 7)),
               SizedBox(width: 320.0),
-              Text(getDuration(_duration.inSeconds).toString().substring(3, 7)),
+              Text(getDuration(duration.inSeconds).toString().substring(3, 7)),
             ],
           ),
           Slider(
-            value: _position.inSeconds.toDouble(),
+            value: position.inSeconds.toDouble(),
             min: 0,
-            max: _duration.inSeconds.toDouble(),
+            max: duration.inSeconds.toDouble(),
             onChangeEnd: (value) {
               setState(() {
                 seekToSecond(value);
@@ -130,6 +194,7 @@ class _NowPlayingState extends State<NowPlaying> {
               ),
               SizedBox(width: 20.0),
               IconButton(
+                onPressed: () => playPrevious(),
                 icon: Icon(Icons.skip_previous),
                 iconSize: 30.0,
               ),
@@ -156,6 +221,7 @@ class _NowPlayingState extends State<NowPlaying> {
               ),
               SizedBox(width: 20.0),
               IconButton(
+                onPressed:() => onComplete(),
                 icon: Icon(Icons.skip_next),
                 iconSize: 30.0,
               ),

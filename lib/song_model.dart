@@ -15,9 +15,9 @@ class songModel {
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
-    songs.forEach((element) {
-      duplicateSongs.add(element);
-    });
+    // songs.forEach((element) {
+    //   duplicateSongs.add(element);
+    // });
   }
 
   playLocal(String uri) async {
@@ -35,4 +35,22 @@ class songModel {
   void seekToSecond(double second){
     audioPlayer.seek(second);
   }
+
+  void getNext(){
+    if(currentSong == songs.length-1) {
+      currentSong = 0;
+    } else {
+      ++currentSong;
+    }
+  }
+
+  void getPrev(){
+    if(currentSong == 0) {
+      currentSong = 0;
+    } else {
+      --currentSong;
+    }
+  }
 }
+
+songModel songmodel;
