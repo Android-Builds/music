@@ -8,8 +8,8 @@ class songModel {
   var duplicateSongs = <Song>[];
   MusicFinder audioPlayer;
   bool isPlaying = false;
-  bool shuffle = false;
-  String repeatMode;
+  bool shuffle = true;
+  String repeatMode = 'ALL';
 
   Duration duration = new Duration();
   Duration position = new Duration();

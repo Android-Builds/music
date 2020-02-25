@@ -26,8 +26,8 @@ class _NowPlayingState extends State<NowPlaying> {
   bool playing;
 
   Widget playIcon = Icon(Icons.pause);
-  Widget repeatIcon = Icon(Icons.repeat, color: Colors.blue);
-  Widget shuffleIcon = Icon(Entypo.shuffle);
+  Widget repeatIcon;
+  Widget shuffleIcon;
 
   Future _playLocal(String uri) async {
     final result = await audioPlayer.play(uri, isLocal: true);
@@ -59,6 +59,8 @@ class _NowPlayingState extends State<NowPlaying> {
   @override
   void initState(){
     super.initState();
+    setRepeatIcon();
+    setShuffleIcon();
     initPlayer();
   }
 
@@ -67,6 +69,8 @@ class _NowPlayingState extends State<NowPlaying> {
 
     title = widget.songmodel.songs[widget.songmodel.currentSong].title;
     artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
+    // setRepeatIcon();
+    // setShuffleIcon();
 
     audioPlayer.setDurationHandler((d) => setState(() {
       duration = d;
@@ -102,8 +106,36 @@ class _NowPlayingState extends State<NowPlaying> {
     _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
     setState(() {
       title = widget.songmodel.songs[widget.songmodel.currentSong].title;
-      artist = widget.songmodel.songs[widget.songmodel.currentSong].title;
+      artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
     });
+  }
+
+  void setShuffleIcon(){
+    if(widget.songmodel.shuffle){
+      setState(() {
+        shuffleIcon = Icon(Entypo.shuffle, color: Colors.blue);
+      });
+    } else {
+      setState(() {
+        shuffleIcon = Icon(Entypo.shuffle);
+      });
+    }
+  }
+
+  void setRepeatIcon(){
+    if(widget.songmodel.repeatMode == 'ALL') {
+      setState(() {
+        repeatIcon = Icon(Icons.repeat, color: Colors.blue);
+      });
+    } else if (widget.songmodel.repeatMode == 'ONE') {
+      setState(() {
+        repeatIcon = Icon(Icons.repeat_one, color: Colors.blue);
+      });
+    } else {
+      setState((){
+        repeatIcon = Icon(Icons.repeat);
+      });
+    }
   }
 
   @override
@@ -186,14 +218,8 @@ class _NowPlayingState extends State<NowPlaying> {
             children: <Widget>[
               IconButton(
                 onPressed: () {
-                  if(widget.songmodel.repeatMode == 'ALL') {
-                    repeatIcon = Icon(Icons.repeat, color: Colors.blue);
-                  } else if (widget.songmodel.repeatMode == 'ONE') {
-                    repeatIcon = Icon(Icons.repeat_one, color: Colors.blue);
-                  } else {
-                    repeatIcon = Icon(Icons.repeat);
-                  }
                   widget.songmodel.setRepeatMode();
+                  setRepeatIcon();
                 },
                 icon: repeatIcon,
                 iconSize: 20.0,
@@ -234,12 +260,8 @@ class _NowPlayingState extends State<NowPlaying> {
               SizedBox(width: 20.0),
               IconButton(
                 onPressed: () {
-                  if(widget.songmodel.shuffle){
-                      shuffleIcon = Icon(Entypo.shuffle);
-                  } else {
-                    shuffleIcon = Icon(Entypo.shuffle, color: Colors.blue);
-                  }
                   widget.songmodel.setShuffleMode();
+                  setShuffleIcon();
                 },
                 icon: shuffleIcon,
                 iconSize: 20.0,
