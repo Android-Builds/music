@@ -26,6 +26,8 @@ class _NowPlayingState extends State<NowPlaying> {
   bool playing;
 
   Widget playIcon = Icon(Icons.pause);
+  Widget repeatIcon = Icon(Icons.repeat, color: Colors.blue);
+  Widget shuffleIcon = Icon(Entypo.shuffle);
 
   Future _playLocal(String uri) async {
     final result = await audioPlayer.play(uri, isLocal: true);
@@ -91,13 +93,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
     audioPlayer.stop();
     _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
-    // if(widget.song != null){
-    //   _playLocal(widget.song.uri);
-    // } else {
-    //   audioPlayer.play(widget.uri);
-    // }
-    
-    playing = true;
+    widget.songmodel.isPlaying = true;
   }
 
   void onComplete() {
@@ -189,7 +185,17 @@ class _NowPlayingState extends State<NowPlaying> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               IconButton(
-                icon: Icon(Feather.repeat),
+                onPressed: () {
+                  if(widget.songmodel.repeatMode == 'ALL') {
+                    repeatIcon = Icon(Icons.repeat, color: Colors.blue);
+                  } else if (widget.songmodel.repeatMode == 'ONE') {
+                    repeatIcon = Icon(Icons.repeat_one, color: Colors.blue);
+                  } else {
+                    repeatIcon = Icon(Icons.repeat);
+                  }
+                  widget.songmodel.setRepeatMode();
+                },
+                icon: repeatIcon,
                 iconSize: 20.0,
               ),
               SizedBox(width: 20.0),
@@ -205,7 +211,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 padding: EdgeInsets.all(0), 
                 alignment: Alignment.center,
                 onPressed: () {  
-                  if(playing){
+                  if(widget.songmodel.isPlaying){
                     setState(() {
                       playIcon = Icon(Icons.play_arrow);
                     });
@@ -216,7 +222,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     });
                     audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                   }
-                  playing = !playing;
+                  widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
                 },
               ),
               SizedBox(width: 20.0),
@@ -227,7 +233,15 @@ class _NowPlayingState extends State<NowPlaying> {
               ),
               SizedBox(width: 20.0),
               IconButton(
-                icon: Icon(Entypo.shuffle),
+                onPressed: () {
+                  if(widget.songmodel.shuffle){
+                      shuffleIcon = Icon(Entypo.shuffle);
+                  } else {
+                    shuffleIcon = Icon(Entypo.shuffle, color: Colors.blue);
+                  }
+                  widget.songmodel.setShuffleMode();
+                },
+                icon: shuffleIcon,
                 iconSize: 20.0,
               )
             ],
