@@ -3,7 +3,15 @@
 *.pxt
 *.uxp
 *.uxt
-build/
 .flutter-plugins
 .flutter-plugins-dependencies
-.dart_tool\
+.buildlog
+.pub/
+.dart_tool/
+build/
+packages
+.packages
+.DS_Store
+.atom/
+.idea
+pubspec.lock
