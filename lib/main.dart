@@ -53,6 +53,22 @@ class _MyHomePageState extends State<MyHomePage> {
   MusicFinder audioPlayer;
   bool playing = false;
 
+  String title, artist;
+
+  Widget playIcon;
+
+  setPlayIcon(){
+    if(songmodel.isPlaying){
+      setState(() {
+        playIcon = Icon(MaterialCommunityIcons.pause_circle);
+      });
+    } else {
+      setState(() {
+        playIcon = Icon(MaterialCommunityIcons.play_circle, color: Colors.red[900],);        
+      });
+    }
+  }
+
   static List<Widget> _widgetOptions = <Widget>[
     Container(
       child: SongsList(songmodel: songmodel,),
@@ -87,6 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
     audioPlayer = new MusicFinder();
     songmodel = new songModel();
     items.addAll(duplicateItems);
+    setPlayIcon();
+    // title = songmodel.songs[songmodel.currentSong].title;
+    // artist = songmodel.songs[songmodel.currentSong].artist;
   }
 
   void filterSearchResults(String query) {
@@ -142,32 +161,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 collapsed: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      'Hi',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'Hello',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            'Hi',
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(width: 100.0,),
                     IconButton(
-                      icon: Icon(
-                        Feather.play_circle
-                      ),
+                      icon: playIcon,
                       onPressed: () {
-                        if(playing){
-                          setState(() {
-                            //playIcon = Icon(Icons.play_arrow);
-                          });
+                        if(songmodel.isPlaying){
                           pause();
                         } else {
-                            setState(() {
-                            //playIcon = Icon(Icons.pause);
-                          });
                           audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
                           }
-                        playing = !playing;
+                        songmodel.isPlaying = !songmodel.isPlaying;
+                        setPlayIcon();
+                        print(songmodel.isPlaying);
                       },
                     ),
                   ],

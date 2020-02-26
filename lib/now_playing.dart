@@ -140,136 +140,147 @@ class _NowPlayingState extends State<NowPlaying> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Container(
-              height: 250.0,
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top:30.0),
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    MaterialCommunityIcons.playlist_music
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 30.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
               child: Container(
-                width: 250,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10.0),
+                height: 250.0,
+                child: Container(
+                  width: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: 50.0),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
+            SizedBox(height: 50.0),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    artist,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(getDuration(position.inSeconds).toString().substring(3, 7)),
+                  Expanded(
+                    child: Slider(
+                      activeColor: Colors.red[900],
+                      inactiveColor: Colors.grey,
+                      value: position.inSeconds.toDouble(),
+                      min: 0,
+                      max: duration.inSeconds.toDouble(),
+                      onChanged: (value) {
+                        seekToSecond(value);
+                        setState(() {
+                          position = new Duration(seconds:value.toInt());
+                        });
+                      },
+                    ),
+                  ),
+                  Text(getDuration(duration.inSeconds).toString().substring(3, 7)),
+                ],
+              ),
+            ),
+            SizedBox(height: 40.0),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold
-                  ),
-                  textAlign: TextAlign.center,
+                IconButton(
+                  onPressed: () {
+                    widget.songmodel.setRepeatMode();
+                    setRepeatIcon();
+                  },
+                  icon: repeatIcon,
+                  iconSize: 20.0,
                 ),
-                SizedBox(height: 20.0),
-                Text(
-                  artist,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                  ),
-                  textAlign: TextAlign.center,
+                SizedBox(width: 20.0),
+                IconButton(
+                  onPressed: () => playPrevious(),
+                  icon: Icon(Icons.skip_previous),
+                  iconSize: 30.0,
+                ),
+                SizedBox(width: 20.0),
+                IconButton(
+                  icon: playIcon,
+                  iconSize: 30.0,
+                  padding: EdgeInsets.all(0), 
+                  alignment: Alignment.center,
+                  onPressed: () {
+                    if(widget.songmodel.isPlaying){
+                      setState(() {
+                        playIcon = Icon(Icons.play_arrow);
+                      });
+                      pause();
+                    } else {
+                      setState(() {
+                        playIcon = Icon(Icons.pause);
+                      });
+                      audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+                    }
+                    widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
+                    print(widget.songmodel.isPlaying);
+                  },
+                ),
+                SizedBox(width: 20.0),
+                IconButton(
+                  onPressed:() => onComplete(),
+                  icon: Icon(Icons.skip_next),
+                  iconSize: 30.0,
+                ),
+                SizedBox(width: 20.0),
+                IconButton(
+                  onPressed: () {
+                    widget.songmodel.setShuffleMode();
+                    setShuffleIcon();
+                  },
+                  icon: shuffleIcon,
+                  iconSize: 20.0,
                 )
               ],
             ),
-          ),
-          SizedBox(height: 50.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(getDuration(position.inSeconds).toString().substring(3, 7)),
-              SizedBox(width: 320.0),
-              Text(getDuration(duration.inSeconds).toString().substring(3, 7)),
-            ],
-          ),
-          Slider(
-            value: position.inSeconds.toDouble(),
-            min: 0,
-            max: duration.inSeconds.toDouble(),
-            onChangeEnd: (value) {
-              setState(() {
-                seekToSecond(value);
-                value = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                seekToSecond(value);
-                value = value;
-              });
-            },
-          ),
-          SizedBox(height: 40.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                onPressed: () {
-                  widget.songmodel.setRepeatMode();
-                  setRepeatIcon();
-                },
-                icon: repeatIcon,
-                iconSize: 20.0,
-              ),
-              SizedBox(width: 20.0),
-              IconButton(
-                onPressed: () => playPrevious(),
-                icon: Icon(Icons.skip_previous),
-                iconSize: 30.0,
-              ),
-              SizedBox(width: 20.0),
-              IconButton(
-                icon: playIcon,
-                iconSize: 30.0,
-                padding: EdgeInsets.all(0), 
-                alignment: Alignment.center,
-                onPressed: () {  
-                  if(widget.songmodel.isPlaying){
-                    setState(() {
-                      playIcon = Icon(Icons.play_arrow);
-                    });
-                    pause();
-                  } else {
-                    setState(() {
-                      playIcon = Icon(Icons.pause);
-                    });
-                    audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
-                  }
-                  widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
-                },
-              ),
-              SizedBox(width: 20.0),
-              IconButton(
-                onPressed:() => onComplete(),
-                icon: Icon(Icons.skip_next),
-                iconSize: 30.0,
-              ),
-              SizedBox(width: 20.0),
-              IconButton(
-                onPressed: () {
-                  widget.songmodel.setShuffleMode();
-                  setShuffleIcon();
-                },
-                icon: shuffleIcon,
-                iconSize: 20.0,
-              )
-            ],
-          ),
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 }

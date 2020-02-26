@@ -7,11 +7,11 @@
 .flutter-plugins-dependencies
 .buildlog
 .pub/
-.dart_tool/
 build/
 packages
 .packages
 .DS_Store
 .atom/
 .idea
+.dart_tool/
 pubspec.lock

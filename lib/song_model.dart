@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flute_music_player/flute_music_player.dart';
 
 class songModel {
@@ -7,7 +6,7 @@ class songModel {
   var songs = <Song>[];
   var duplicateSongs = <Song>[];
   MusicFinder audioPlayer;
-  bool isPlaying = false;
+  bool isPlaying = true;
   bool shuffle = true;
   String repeatMode = 'ALL';
 
