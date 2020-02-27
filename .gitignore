@@ -8,10 +8,12 @@
 .buildlog
 .pub/
 build/
+.dart_tool/
 packages
 .packages
 .DS_Store
 .atom/
 .idea
-.dart_tool/
 pubspec.lock
+.dart_tool/flutter_build/7b076ecb80d674d317dfbf3bdd36e38b/app.dill
+.dart_tool/flutter_build/7b076ecb80d674d317dfbf3bdd36e38b/.filecache

@@ -208,16 +208,16 @@ class _MyHomePageState extends State<MyHomePage> {
           unselectedItemColor: Colors.grey,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.album),
-              title: Text('Albums'),
+              icon: Icon(Icons.music_note),
+              title: Text('Songs'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.playlist_play),
               title: Text('Playlist'),
-            ),
+            ),            
             BottomNavigationBarItem(
-              icon: Icon(Icons.music_note),
-              title: Text('Songs'),
+              icon: Icon(Icons.album),
+              title: Text('Albums'),
             ),
           ],
           currentIndex: _selectedIndex,

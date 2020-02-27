@@ -145,7 +145,7 @@ class _NowPlayingState extends State<NowPlaying> {
         body: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top:30.0),
+              padding: const EdgeInsets.only(top:20.0),
               child: Column(
                 children: <Widget>[
                   Icon(
@@ -154,7 +154,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 ],
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Container(
@@ -168,14 +168,14 @@ class _NowPlayingState extends State<NowPlaying> {
                 ),
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    title,
+                    title.substring(0,20),
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20.0,
@@ -183,7 +183,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   Text(
                     artist,
                     style: TextStyle(
@@ -220,7 +220,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 ],
               ),
             ),
-            SizedBox(height: 40.0),
+            SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

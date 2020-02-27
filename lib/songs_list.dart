@@ -2,6 +2,7 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/settings.dart';
 import 'dart:io';
 import 'package:music/now_playing.dart';
@@ -14,6 +15,8 @@ class SongsList extends StatefulWidget {
   @override
   _SongsListState createState() => _SongsListState();
 }
+
+enum MenuOptions { addtoPlaylist, playNext, addToQueue, goToAlbum }
 
 class _SongsListState extends State<SongsList> {
 
@@ -97,7 +100,28 @@ class _SongsListState extends State<SongsList> {
                 ),
               )
             );
-            }
+            },
+            trailing: PopupMenuButton<MenuOptions>(
+              onSelected: (MenuOptions result) { setState(() { /*_selection = result;*/ }); },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
+                const PopupMenuItem<MenuOptions>(
+                  value: MenuOptions.addtoPlaylist,
+                  child: Text('Add to Playlist'),
+                ),
+                const PopupMenuItem<MenuOptions>(
+                  value: MenuOptions.playNext,
+                  child: Text('Play Next'),
+                ),
+                const PopupMenuItem<MenuOptions>(
+                  value: MenuOptions.addToQueue,
+                  child: Text('Add to queue'),
+                ),
+                const PopupMenuItem<MenuOptions>(
+                  value: MenuOptions.goToAlbum,
+                  child: Text('Go to album'),
+                ),
+              ],
+            ),
           );
         },
       trailing: CircleAvatar(
