@@ -15,5 +15,4 @@ packages
 .atom/
 .idea
 pubspec.lock
-.dart_tool/flutter_build/7b076ecb80d674d317dfbf3bdd36e38b/app.dill
-.dart_tool/flutter_build/7b076ecb80d674d317dfbf3bdd36e38b/.filecache
+.dart_tool/flutter_build/

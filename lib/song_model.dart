@@ -75,7 +75,7 @@ class songModel {
       }
     } else if (repeatMode == 'OFF'){
       if (currentSong == songs.length-1){
-        audioPlayer.pause();
+        currentSong = currentSong;
       } else {
         if (shuffle) {
           getRandom();

@@ -103,11 +103,18 @@ class _NowPlayingState extends State<NowPlaying> {
   void onComplete() {
     audioPlayer.stop();
     widget.songmodel.getNext();
-    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    if(widget.songmodel.currentSong == widget.songmodel.songs.length-1){
+      setState(() {
+        widget.songmodel.isPlaying = false;
+        position = position = new Duration(seconds:0);
+      });
+    } else{
+      _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
     setState(() {
       title = widget.songmodel.songs[widget.songmodel.currentSong].title;
       artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
     });
+    }
   }
 
   void setShuffleIcon(){
