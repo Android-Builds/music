@@ -2,7 +2,6 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/settings.dart';
 import 'dart:io';
 import 'package:music/now_playing.dart';
@@ -11,7 +10,7 @@ import 'package:quiver/strings.dart';
 
 class SongsList extends StatefulWidget {
   SongsList({this.songmodel});
-  final songModel songmodel;
+  final SongModel songmodel;
   @override
   _SongsListState createState() => _SongsListState();
 }
@@ -23,7 +22,6 @@ class _SongsListState extends State<SongsList> {
   List<Song> _songs;
   List<Song> duplicateSongs;
   MusicFinder audioPlayer;
-  //songModel songmodel;
 
   @override
   void initState(){
@@ -68,6 +66,27 @@ class _SongsListState extends State<SongsList> {
         }
   }
 
+  Future _playLocal(String uri) async {
+    await audioPlayer.play(uri, isLocal: true);
+  }
+
+  popUpMenuActions(MenuOptions result, int index){
+    switch(result){
+      case MenuOptions.addtoPlaylist:
+        widget.songmodel.playQueue.add(widget.songmodel.songs[index]);
+        break;
+      case MenuOptions.playNext:
+        widget.songmodel.currentSong = index;
+        break;
+      case MenuOptions.addToQueue:
+        // TODO: Handle this case.
+        break;
+      case MenuOptions.goToAlbum:
+        // TODO: Handle this case.
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,7 +121,11 @@ class _SongsListState extends State<SongsList> {
             );
             },
             trailing: PopupMenuButton<MenuOptions>(
-              onSelected: (MenuOptions result) { setState(() { /*_selection = result;*/ }); },
+              onSelected: (MenuOptions result) { 
+                setState(() { 
+                  popUpMenuActions(result, index); 
+                }); 
+              },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
                 const PopupMenuItem<MenuOptions>(
                   value: MenuOptions.addtoPlaylist,

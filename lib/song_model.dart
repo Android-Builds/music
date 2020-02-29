@@ -1,10 +1,11 @@
 import 'dart:math';
 import 'package:flute_music_player/flute_music_player.dart';
 
-class songModel {
+class SongModel {
   int currentSong = 0;
   var songs = <Song>[];
   var duplicateSongs = <Song>[];
+  var playQueue = <Song>[];
   MusicFinder audioPlayer;
   bool isPlaying = true;
   bool shuffle = true;
@@ -13,7 +14,7 @@ class songModel {
   Duration duration = new Duration();
   Duration position = new Duration();
 
-  songModel(){
+  SongModel(){
     fetchSongs();
   }
 

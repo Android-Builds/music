@@ -1,8 +1,7 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:music/now_playing.dart';
-import 'package:music/settings.dart';
+import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -49,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var items = List<String>();
 
   // static List<Song> _songs = [];
-  static songModel songmodel;
+  static SongModel songmodel;
   MusicFinder audioPlayer;
   bool playing = false;
 
@@ -74,12 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: SongsList(songmodel: songmodel,),
     ),
     Container(
-      child: Text(
-        'HI',
-        style: TextStyle(
-          color: Colors.white
-        ),
-      ),
+      child: Playlists(),
     ),
     Text(
       'Index 2: School',
@@ -101,11 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     audioPlayer = new MusicFinder();
-    songmodel = new songModel();
+    songmodel = new SongModel();
     items.addAll(duplicateItems);
     setPlayIcon();
-    // title = songmodel.songs[songmodel.currentSong].title;
-    // artist = songmodel.songs[songmodel.currentSong].artist;
   }
 
   void filterSearchResults(String query) {

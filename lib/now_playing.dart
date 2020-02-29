@@ -7,7 +7,7 @@ class NowPlaying extends StatefulWidget {
   NowPlaying({this.uri, this.song, this.songmodel});
   final Song song;
   final String uri;
-  final songModel songmodel;
+  final SongModel songmodel;
   @override
   _NowPlayingState createState() => _NowPlayingState();
 }
