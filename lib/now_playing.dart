@@ -102,19 +102,21 @@ class _NowPlayingState extends State<NowPlaying> {
 
   void onComplete() {
     audioPlayer.stop();
-    widget.songmodel.getNext();
-    if(widget.songmodel.currentSong == widget.songmodel.songs.length-1){
+    if(widget.songmodel.repeatMode == 'OFF' && widget.songmodel.currentSong == widget.songmodel.songs.length-1){
+      audioPlayer.stop();
       setState(() {
         widget.songmodel.isPlaying = false;
         position = position = new Duration(seconds:0);
-      });
-    } else{
-      _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+        playIcon = Icon(Icons.play_arrow);
+      });        
+      return;
+    }
+    widget.songmodel.getNext();
+    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
     setState(() {
       title = widget.songmodel.songs[widget.songmodel.currentSong].title;
       artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
     });
-    }
   }
 
   void setShuffleIcon(){
@@ -265,7 +267,6 @@ class _NowPlayingState extends State<NowPlaying> {
                       audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                     }
                     widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
-                    print(widget.songmodel.isPlaying);
                   },
                 ),
                 SizedBox(width: 20.0),

@@ -68,7 +68,7 @@ class songModel {
 
   void getNext(){
     if(repeatMode == 'ALL'){
-      if(shuffle){
+      if(shuffle == true){
         getRandom();
       } else{
         getNextSong();
@@ -77,7 +77,7 @@ class songModel {
       if (currentSong == songs.length-1){
         currentSong = currentSong;
       } else {
-        if (shuffle) {
+        if (shuffle == true) {
           getRandom();
         } else {
           getNextSong();
