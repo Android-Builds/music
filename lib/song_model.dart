@@ -19,18 +19,21 @@ class SongModel {
   }
 
   fetchSongs() async {
-    songs = await MusicFinder.allSongs();
-    // songs.forEach((element) {
-    //   duplicateSongs.add(element);
-    // });
+    // songs = await MusicFinder.allSongs();
+    // audioPlayer = new MusicFinder();
+    try {
+      songs = await MusicFinder.allSongs();
+    } catch (e) {
+      print("Failed to get songs: '${e.message}'.");
+    }
   }
 
   playLocal(String uri) async {
-    final result = await audioPlayer.play(uri, isLocal: true);
+    await audioPlayer.play(uri, isLocal: true);
   }
 
   pause() async {
-    final result = await audioPlayer.pause();
+    await audioPlayer.pause();
   }
 
   setRepeatMode(){

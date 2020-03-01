@@ -26,21 +26,14 @@ class _SongsListState extends State<SongsList> {
   @override
   void initState(){
     super.initState();
-    //songmodel = new songModel();
     initSongs();
   }
 
   Future<void> initSongs() async {
     audioPlayer = new MusicFinder();
-    var songs;
-    try {
-      songs = await MusicFinder.allSongs();
-    } catch (e) {
-      print("Failed to get songs: '${e.message}'.");
-    }
-    duplicateSongs = songs;
+    await MusicFinder.allSongs();
     setState(() {
-     widget.songmodel.duplicateSongs = songs;
+     widget.songmodel.duplicateSongs = widget.songmodel.songs;
     });
   }
 
@@ -64,10 +57,6 @@ class _SongsListState extends State<SongsList> {
             _songs.addAll(duplicateSongs);
           });
         }
-  }
-
-  Future _playLocal(String uri) async {
-    await audioPlayer.play(uri, isLocal: true);
   }
 
   popUpMenuActions(MenuOptions result, int index){
@@ -94,8 +83,8 @@ class _SongsListState extends State<SongsList> {
     );
   }
 
-  getSongs(List<Song> songs){
-    if (songs.length == null){
+  getSongs(List<Song> songList){
+    if (songList.length == null){
       return Expanded(
         child: Center(
           child: CircularProgressIndicator(),
@@ -103,14 +92,14 @@ class _SongsListState extends State<SongsList> {
       );
     } else {
       return FloatingSearchBar.builder(
-        itemCount: songs.length,
+        itemCount: songList.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
             leading: CircleAvatar(
-              child: songs[index].albumArt != null ? Image.file(File(songs[index].albumArt)): Icon(Icons.music_note),
+              child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
             ),
-            title: Text(songs[index].title),
+            title: Text(songList[index].title),
             onTap: () {
               widget.songmodel.currentSong = index;
               Navigator.push(context, MaterialPageRoute(
@@ -208,6 +197,6 @@ class _SongsListState extends State<SongsList> {
     return Colors.white;
   else
     return Colors.black;
-}
+  }
 
 }

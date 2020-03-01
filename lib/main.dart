@@ -1,9 +1,11 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:music/play_now.dart';
 import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
+import 'package:music/splash_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() => runApp(MyApp());
@@ -20,9 +22,6 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         primaryTextTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.grey,
-          )
         ),
         backgroundColor: Colors.black,
         iconTheme: IconThemeData(
@@ -75,15 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Container(
       child: Playlists(),
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    Container(
+    )
   ];
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -124,11 +120,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   playLocal(String uri) async {
-    final result = await audioPlayer.play(uri, isLocal: true);
+    await audioPlayer.play(uri, isLocal: true);
   }
 
   pause() async {
-    final result = await audioPlayer.pause();
+    await audioPlayer.pause();
   }
 
   @override
@@ -141,15 +137,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Stack(
             children: <Widget>[
               _widgetOptions.elementAt(_selectedIndex),
+              FlatButton(
+                child: Text('Press Me'),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LottieDemo())),
+              ),
               SlidingUpPanel(
-                panel: Center(
-                  child: Text(
-                    "This is the sliding Widget",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                panel: NowPlaying(songmodel: songmodel),
                 collapsed: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -189,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 borderRadius: BorderRadius.circular(5.0),
                 minHeight: 50.0,
-                maxHeight: 800.0,
+                maxHeight: 650.0,
               ),
             ],
           )

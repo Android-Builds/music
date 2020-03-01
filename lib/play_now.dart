@@ -96,8 +96,8 @@ class _NowPlayingState extends State<NowPlaying> {
     });
 
     audioPlayer.stop();
-    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
-    widget.songmodel.isPlaying = true;
+    // _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    // widget.songmodel.isPlaying = true;
   }
 
   void onComplete() {
@@ -150,8 +150,7 @@ class _NowPlayingState extends State<NowPlaying> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Column(
+      child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top:20.0),
@@ -288,7 +287,6 @@ class _NowPlayingState extends State<NowPlaying> {
             ),
           ],
         )
-      ),
     );
   }
 }
