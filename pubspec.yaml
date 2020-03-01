@@ -15,7 +15,7 @@ dependencies:
   flute_music_player:
   quiver:
   sliding_up_panel:
-  lottie_flutter:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +25,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: ShadowsIntoLight
+      fonts:
+        - asset: assets/fonts/ShadowsIntoLight-Regular.ttf

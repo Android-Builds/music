@@ -1,14 +1,13 @@
-import 'package:flute_music_player/flute_music_player.dart';
+import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:music/play_now.dart';
-import 'package:music/playlists.dart';
-import 'package:music/song_model.dart';
-import 'package:music/songs_list.dart';
-import 'package:music/splash_screen.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:music/constants.dart';
+import 'package:music/music.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp( MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -28,196 +27,60 @@ class MyApp extends StatelessWidget {
           color: Colors.grey,
         ),
       ),
-      home: MyHomePage(title: 'Music'),
+      home: SplashScreen(),
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  final duplicateItems = List<String>.generate(100, (i) => "Item $i");
-  var items = List<String>();
-
-  // static List<Song> _songs = [];
-  static SongModel songmodel;
-  MusicFinder audioPlayer;
-  bool playing = false;
-
-  String title, artist;
-
-  Widget playIcon;
-
-  setPlayIcon(){
-    if(songmodel.isPlaying){
-      setState(() {
-        playIcon = Icon(MaterialCommunityIcons.pause_circle);
-      });
-    } else {
-      setState(() {
-        playIcon = Icon(MaterialCommunityIcons.play_circle, color: Colors.red[900],);        
-      });
-    }
-  }
-
-  static List<Widget> _widgetOptions = <Widget>[
-    Container(
-      child: SongsList(songmodel: songmodel,),
-    ),
-    Container(
-      child: Playlists(),
-    ),
-    Container(
-    )
-  ];
-
-  int _selectedIndex = 0;
-
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+ class SplashScreen extends StatefulWidget {
+   @override
+   _SplashScreenState createState() => _SplashScreenState();
+ }
+ 
+ class _SplashScreenState extends State<SplashScreen> {
+   @override
+   void initState(){
+     super.initState();
+     Timer(Duration(seconds: 2), () {
+      Route route = MaterialPageRoute(builder: (context) => HomePage());
+      Navigator.pushReplacement(context, route);
     });
   }
-
-  @override
-  void initState() {
-    super.initState();
-    audioPlayer = new MusicFinder();
-    songmodel = new SongModel();
-    items.addAll(duplicateItems);
-    setPlayIcon();
-  }
-
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateItems);
-    if(query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if(item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
-    }
-  }
-
-  playLocal(String uri) async {
-    await audioPlayer.play(uri, isLocal: true);
-  }
-
-  pause() async {
-    await audioPlayer.pause();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
-          color: Theme.of(context).backgroundColor,
-          child: Stack(
-            children: <Widget>[
-              _widgetOptions.elementAt(_selectedIndex),
-              FlatButton(
-                child: Text('Press Me'),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LottieDemo())),
-              ),
-              SlidingUpPanel(
-                panel: NowPlaying(songmodel: songmodel),
-                collapsed: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Hello',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                          Text(
-                            'Hi',
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 100.0,),
-                    IconButton(
-                      icon: playIcon,
-                      onPressed: () {
-                        if(songmodel.isPlaying){
-                          pause();
-                        } else {
-                          audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
-                          }
-                        songmodel.isPlaying = !songmodel.isPlaying;
-                        setPlayIcon();
-                        print(songmodel.isPlaying);
-                      },
-                    ),
-                  ],
+   
+   @override
+   Widget build(BuildContext context) {
+     return SafeArea(
+       child: Scaffold(
+         body: Stack(
+           fit: StackFit.expand,
+           children: <Widget>[
+             Container(
+               decoration: BoxDecoration(
+                 color: Theme.of(context).backgroundColor,
                 ),
-                borderRadius: BorderRadius.circular(5.0),
-                minHeight: 50.0,
-                maxHeight: 650.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Orchid Music',
+                    style: TextStyle(
+                      color:getColor(context),
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'ShadowsIntoLight',
+                      letterSpacing: 3.0
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
+                  Icon(
+                    Feather.music,
+                    size: 40.0,
+                  )
+                ],
               ),
             ],
-          )
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 0.0,
-          backgroundColor: Theme.of(context).backgroundColor,
-          unselectedItemColor: Colors.grey,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.music_note),
-              title: Text('Songs'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.playlist_play),
-              title: Text('Playlist'),
-            ),            
-            BottomNavigationBarItem(
-              icon: Icon(Icons.album),
-              title: Text('Albums'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.lightGreenAccent[700],
-          onTap: _onItemTapped,
-        ),
-      ),
-    );
-  }
-}
-
-getColor(BuildContext context) {
-  var brightness = MediaQuery.of(context).platformBrightness;
-  if (brightness == Brightness.dark)
-    return Colors.white;
-  else
-    return Colors.black;
-}
+         ),
+       ),
+     );
+   }
+ }

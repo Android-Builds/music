@@ -91,102 +91,105 @@ class _SongsListState extends State<SongsList> {
         ),
       );
     } else {
-      return FloatingSearchBar.builder(
-        itemCount: songList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
-            leading: CircleAvatar(
-              child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
-            ),
-            title: Text(songList[index].title),
-            onTap: () {
-              widget.songmodel.currentSong = index;
-              Navigator.push(context, MaterialPageRoute(
-              builder: (context) => NowPlaying(
-                songmodel: widget.songmodel,
-                ),
-              )
-            );
-            },
-            trailing: PopupMenuButton<MenuOptions>(
-              onSelected: (MenuOptions result) { 
-                setState(() { 
-                  popUpMenuActions(result, index); 
-                }); 
+      return Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: FloatingSearchBar.builder(
+          itemCount: songList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
+              leading: CircleAvatar(
+                child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
+              ),
+              title: Text(songList[index].title),
+              onTap: () {
+                widget.songmodel.currentSong = index;
+                Navigator.push(context, MaterialPageRoute(
+                builder: (context) => NowPlaying(
+                  songmodel: widget.songmodel,
+                  ),
+                )
+              );
               },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
-                const PopupMenuItem<MenuOptions>(
-                  value: MenuOptions.addtoPlaylist,
-                  child: Text('Add to Playlist'),
-                ),
-                const PopupMenuItem<MenuOptions>(
-                  value: MenuOptions.playNext,
-                  child: Text('Play Next'),
-                ),
-                const PopupMenuItem<MenuOptions>(
-                  value: MenuOptions.addToQueue,
-                  child: Text('Add to queue'),
-                ),
-                const PopupMenuItem<MenuOptions>(
-                  value: MenuOptions.goToAlbum,
-                  child: Text('Go to album'),
-                ),
-              ],
-            ),
-          );
-        },
-      trailing: CircleAvatar(
-        child: Text("RD"),
-      ),
-        drawer: Drawer(
-          elevation: 0.0,
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            child: ListView(
-              children: <Widget>[
-                Container(
-                  height: 150.0,
-                  child: DrawerHeader(
-                    child: Text(
-                      'Walls',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0
+              trailing: PopupMenuButton<MenuOptions>(
+                onSelected: (MenuOptions result) { 
+                  setState(() { 
+                    popUpMenuActions(result, index); 
+                  }); 
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
+                  const PopupMenuItem<MenuOptions>(
+                    value: MenuOptions.addtoPlaylist,
+                    child: Text('Add to Playlist'),
+                  ),
+                  const PopupMenuItem<MenuOptions>(
+                    value: MenuOptions.playNext,
+                    child: Text('Play Next'),
+                  ),
+                  const PopupMenuItem<MenuOptions>(
+                    value: MenuOptions.addToQueue,
+                    child: Text('Add to queue'),
+                  ),
+                  const PopupMenuItem<MenuOptions>(
+                    value: MenuOptions.goToAlbum,
+                    child: Text('Go to album'),
+                  ),
+                ],
+              ),
+            );
+          },
+        trailing: CircleAvatar(
+          child: Text("RD"),
+        ),
+          drawer: Drawer(
+            elevation: 0.0,
+            child: Container(
+              color: Theme.of(context).backgroundColor,
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    height: 150.0,
+                    child: DrawerHeader(
+                      child: Text(
+                        'Walls',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
                   ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
-                  },
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+                    },
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    title: Text(
+                      'Settings',
+                      style: TextStyle(
+                        color: getColor(context),
+                      ),
+                      ),
+                    trailing: Icon(
+                      Icons.settings,
                       color: getColor(context),
-                    ),
-                    ),
-                  trailing: Icon(
-                    Icons.settings,
-                    color: getColor(context),
-                    ),
-                ),
-              ],
+                      ),
+                  ),
+                ],
+              ),
             ),
           ),
+        onChanged: (String value) {
+          filterSearchResults(value);
+        },
+        onTap: () {},
+        decoration: InputDecoration.collapsed(
+          hintText: "Search...",
         ),
-      onChanged: (String value) {
-        filterSearchResults(value);
-      },
-      onTap: () {},
-      decoration: InputDecoration.collapsed(
-        hintText: "Search...",
-      ),
+        ),
       );
     }
   }

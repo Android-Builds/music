@@ -4,9 +4,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/song_model.dart';
 
 class NowPlaying extends StatefulWidget {
-  NowPlaying({this.uri, this.song, this.songmodel});
-  final Song song;
-  final String uri;
+  NowPlaying({this.songmodel, this.songArtist, this.songTitle, });
+  final String songArtist;
+  final String songTitle;
   final SongModel songmodel;
   @override
   _NowPlayingState createState() => _NowPlayingState();
@@ -67,10 +67,8 @@ class _NowPlayingState extends State<NowPlaying> {
   void initPlayer(){
     audioPlayer = new MusicFinder();
 
-    title = widget.songmodel.songs[widget.songmodel.currentSong].title;
-    artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
-    // setRepeatIcon();
-    // setShuffleIcon();
+    title = 'Hi';
+    artist = 'Hello';
 
     audioPlayer.setDurationHandler((d) => setState(() {
       duration = d;
@@ -183,7 +181,9 @@ class _NowPlayingState extends State<NowPlaying> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    title.substring(0,20),
+                    'Hi',
+                    // widget.songTitle,
+                    // title.substring(0,20),
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20.0,
@@ -193,7 +193,8 @@ class _NowPlayingState extends State<NowPlaying> {
                   ),
                   SizedBox(height: 10.0),
                   Text(
-                    artist,
+                    'Hello',
+                    // widget.songArtist,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 15.0,
