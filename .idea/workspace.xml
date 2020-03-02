@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d435a16-6caf-47fe-bd02-04e71628f72a" name="Default Changelist" comment="" />
+    <list default="true" id="5d435a16-6caf-47fe-bd02-04e71628f72a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/now_playing.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/now_playing.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/songs_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/songs_list.dart" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
     <ignored path="$PROJECT_DIR$/.pub/" />
@@ -18,8 +22,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="864">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="688">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
             </state>
           </provider>
         </entry>
@@ -48,10 +52,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -120,8 +124,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="688">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
         </state>
       </provider>
     </entry>

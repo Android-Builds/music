@@ -115,6 +115,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
+        drawer: Drawer(),
         body: Container(
           color: Theme.of(context).backgroundColor,
           child: Stack(

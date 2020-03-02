@@ -2,6 +2,7 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/song_model.dart';
+import 'dart:io';
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({this.uri, this.song, this.songmodel});
@@ -25,7 +26,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
   bool playing;
 
-  Widget playIcon = Icon(Icons.pause);
+  IconData playIcon = Icons.pause;
   Widget repeatIcon;
   Widget shuffleIcon;
 
@@ -107,7 +108,7 @@ class _NowPlayingState extends State<NowPlaying> {
       setState(() {
         widget.songmodel.isPlaying = false;
         position = position = new Duration(seconds:0);
-        playIcon = Icon(Icons.play_arrow);
+        playIcon = Icons.play_arrow;
       });        
       return;
     }
@@ -169,11 +170,8 @@ class _NowPlayingState extends State<NowPlaying> {
               child: Container(
                 height: 250.0,
                 child: Container(
+                  child: Icon(MaterialCommunityIcons.music_note, size: 250.0),
                   width: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
                 ),
               ),
             ),
@@ -212,7 +210,6 @@ class _NowPlayingState extends State<NowPlaying> {
                   Text(getDuration(position.inSeconds).toString().substring(3, 7)),
                   Expanded(
                     child: Slider(
-                      activeColor: Colors.red[900],
                       inactiveColor: Colors.grey,
                       value: position.inSeconds.toDouble(),
                       min: 0,
@@ -249,20 +246,17 @@ class _NowPlayingState extends State<NowPlaying> {
                   iconSize: 30.0,
                 ),
                 SizedBox(width: 20.0),
-                IconButton(
-                  icon: playIcon,
-                  iconSize: 30.0,
-                  padding: EdgeInsets.all(0), 
-                  alignment: Alignment.center,
+                FloatingActionButton(
+                  child: Icon(playIcon),
                   onPressed: () {
                     if(widget.songmodel.isPlaying){
                       setState(() {
-                        playIcon = Icon(Icons.play_arrow);
+                        playIcon = Icons.play_arrow;
                       });
                       pause();
                     } else {
                       setState(() {
-                        playIcon = Icon(Icons.pause);
+                        playIcon = Icons.pause;
                       });
                       audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                     }
