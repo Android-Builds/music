@@ -1,8 +1,10 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:media_notification/media_notification.dart';
 import 'package:music/song_model.dart';
-import 'dart:io';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({this.uri, this.song, this.songmodel});
@@ -23,7 +25,7 @@ class _NowPlayingState extends State<NowPlaying> {
   PlayerState playerState;
   String title;
   String artist;
-
+  String status = 'hidden';
   bool playing;
 
   IconData playIcon = Icons.pause;
@@ -63,6 +65,61 @@ class _NowPlayingState extends State<NowPlaying> {
     setRepeatIcon();
     setShuffleIcon();
     initPlayer();
+    initNotifications();
+  }
+
+  void initNotifications() {
+    //TODO: Slider and times on notification
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        pause();        
+        status = 'pause';
+      });
+    });
+
+    MediaNotification.setListener('play', () {
+      setState(() {
+        audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+        status = 'play';
+      });
+    });
+    
+    MediaNotification.setListener('next', () {
+      setState(() {
+        onComplete();
+        showNotification(title.substring(0,20), artist);
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        playPrevious();
+        showNotification(title.substring(0,20), (artist.length >=20 ? artist.substring(0,20):artist));
+      });      
+    });
+
+    MediaNotification.setListener('select', () {
+      
+    });
+  }
+
+  Future<void> hideNotification() async {
+    try {
+      await MediaNotification.hide();
+      setState(() => status = 'hidden');
+  } on PlatformException {
+
+    }
+  }
+
+  Future<void> showNotification(title, author) async {
+    try {
+      await MediaNotification.show(title: title, author: author);
+      setState(() => status = 'play');
+    } on PlatformException {
+      print('Exception Found');
+    }
   }
 
   void initPlayer(){
@@ -70,8 +127,6 @@ class _NowPlayingState extends State<NowPlaying> {
 
     title = widget.songmodel.songs[widget.songmodel.currentSong].title;
     artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
-    // setRepeatIcon();
-    // setShuffleIcon();
 
     audioPlayer.setDurationHandler((d) => setState(() {
       duration = d;
@@ -98,6 +153,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
     audioPlayer.stop();
     _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+    showNotification(title, artist);
     widget.songmodel.isPlaying = true;
   }
 

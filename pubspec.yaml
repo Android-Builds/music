@@ -16,6 +16,7 @@ dependencies:
   quiver:
   sliding_up_panel:
   shared_preferences:
+  media_notification:
 
 dev_dependencies:
   flutter_test:

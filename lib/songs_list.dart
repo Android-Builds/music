@@ -138,7 +138,7 @@ class _SongsListState extends State<SongsList> {
                               ),
                             ),
                             Positioned(
-                              right: 15.0, top: 10.0,
+                              right: 15.0, top: 12.0,
                               child: GestureDetector(
                                 onTapDown: (TapDownDetails details) {
                                   _showPopupMenu(details.globalPosition);
