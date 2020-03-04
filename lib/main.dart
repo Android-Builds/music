@@ -15,14 +15,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         backgroundColor: Colors.white,
+        primarySwatch: Colors.indigo,
         iconTheme: IconThemeData(
           color: Colors.grey,
         )
       ),
       darkTheme: ThemeData(
-        primaryTextTheme: TextTheme(
-        ),
         backgroundColor: Colors.black,
+        primarySwatch: Colors.indigo,
         iconTheme: IconThemeData(
           color: Colors.grey,
         ),

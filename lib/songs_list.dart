@@ -160,7 +160,7 @@ class _SongsListState extends State<SongsList> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
                   leading: CircleAvatar(
                     child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
                   ),

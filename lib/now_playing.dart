@@ -29,7 +29,7 @@ class _NowPlayingState extends State<NowPlaying> {
   String status = 'hidden';
   bool playing;
 
-  IconData playIcon = Icons.pause;
+  IconData playIcon;
   Widget repeatIcon;
   Widget shuffleIcon;
 
@@ -174,6 +174,7 @@ class _NowPlayingState extends State<NowPlaying> {
       showPausedNotification(title, artist);
       widget.songmodel.isPlaying = true;
     }
+    playIcon = widget.songmodel.isPlaying ? Icons.pause : Icons.play_arrow;
   }
 
   void onComplete() {
@@ -278,21 +279,22 @@ class _NowPlayingState extends State<NowPlaying> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(getDuration(position.inSeconds).toString().substring(3, 7)),
+                  Text(widget.songmodel.isPlaying ? getDuration(position.inSeconds).toString().substring(3, 7) : songPosition),
                   Expanded(
                     child: Slider(
                       inactiveColor: Colors.grey,
-                      value: position.inSeconds.toDouble(),
+                      value: widget.songmodel.isPlaying ? position.inSeconds.toDouble() : sliderPosition.inSeconds.toDouble(),
                       min: 0,
                       max: sliderDuration,
                       onChanged: (value) {
                         seekToSecond(value);
                         setState(() {
                           position = new Duration(seconds:value.toInt());
+                          sliderPosition = position;
                         });
                       },
                     ),
@@ -327,6 +329,8 @@ class _NowPlayingState extends State<NowPlaying> {
                     if(widget.songmodel.isPlaying){
                       setState(() {
                         playIcon = Icons.play_arrow;
+                        sliderPosition = position;
+                        songPosition = getDuration(position.inSeconds).toString().substring(3, 7).toString();
                         showNotification(title, artist);
                       });
                       pause();
