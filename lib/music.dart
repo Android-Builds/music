@@ -1,7 +1,7 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:music/play_now.dart';
+import 'now_playing.dart';
 import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
@@ -121,48 +121,52 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: <Widget>[
               _widgetOptions.elementAt(_selectedIndex),
-              SlidingUpPanel(
-                panel: NowPlaying(songmodel: songmodel, songArtist: songArtist, songTitle: songTitle),
-                collapsed: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Hello',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NowPlaying(songmodel: songmodel),)),
+                child: SlidingUpPanel(
+                  panel: Text('Hi'),
+                  // panel: NowPlaying(songmodel: songmodel, songArtist: songArtist, songTitle: songTitle),
+                  collapsed: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Hello',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Hi',
-                          ),
-                        ],
+                            Text(
+                              'Hi',
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 100.0,),
-                    IconButton(
-                      icon: playIcon,
-                      onPressed: () {
-                        if(songmodel.isPlaying){
-                          pause();
-                        } else {
-                          audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
-                          }
-                        songmodel.isPlaying = !songmodel.isPlaying;
-                        setPlayIcon();
-                        print(songmodel.isPlaying);
-                      },
-                    ),
-                  ],
+                      SizedBox(width: 100.0,),
+                      IconButton(
+                        icon: playIcon,
+                        onPressed: () {
+                          if(songmodel.isPlaying){
+                            pause();
+                          } else {
+                            audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
+                            }
+                          songmodel.isPlaying = !songmodel.isPlaying;
+                          setPlayIcon();
+                          print(songmodel.isPlaying);
+                        },
+                      ),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                  minHeight: 50.0,
+                  maxHeight: 1000.0,
                 ),
-                borderRadius: BorderRadius.circular(5.0),
-                minHeight: 50.0,
-                maxHeight: 650.0,
               ),
             ],
           )

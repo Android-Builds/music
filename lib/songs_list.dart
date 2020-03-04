@@ -170,6 +170,7 @@ class _SongsListState extends State<SongsList> {
                     Navigator.push(context, MaterialPageRoute(
                     builder: (context) => NowPlaying(
                       songmodel: widget.songmodel,
+                      playSong: true,
                       ),
                     )
                   );

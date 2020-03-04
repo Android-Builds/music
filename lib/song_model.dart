@@ -7,7 +7,7 @@ class SongModel {
   var duplicateSongs = <Song>[];
   var playQueue = <Song>[];
   MusicFinder audioPlayer;
-  bool isPlaying = true;
+  bool isPlaying = false;
   bool shuffle = true;
   String repeatMode = 'ALL';
 

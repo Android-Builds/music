@@ -7,3 +7,7 @@ getColor(BuildContext context) {
   else
     return Colors.black;
 }
+
+  String songDuration = '0';
+
+  double sliderDuration = 0.0;

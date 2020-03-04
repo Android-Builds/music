@@ -6,11 +6,12 @@ import 'package:music/song_model.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 
+import 'constants.dart';
+
 class NowPlaying extends StatefulWidget {
-  NowPlaying({this.uri, this.song, this.songmodel});
-  final Song song;
-  final String uri;
+  NowPlaying({this.songmodel, this.playSong = false});
   final SongModel songmodel;
+  final bool playSong;
   @override
   _NowPlayingState createState() => _NowPlayingState();
 }
@@ -45,8 +46,8 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 
   getDuration(int seconds){
-    Duration duration = new Duration(seconds: seconds);
-    return duration;
+    Duration thisDuration = new Duration(seconds: seconds);
+    return thisDuration;
   }
 
   void playPrevious() {
@@ -64,8 +65,8 @@ class _NowPlayingState extends State<NowPlaying> {
     super.initState();
     setRepeatIcon();
     setShuffleIcon();
-    initPlayer();
     initNotifications();
+    initPlayer();
   }
 
   void initNotifications() {
@@ -73,22 +74,26 @@ class _NowPlayingState extends State<NowPlaying> {
 
     MediaNotification.setListener('pause', () {
       setState(() {
-        pause();        
+        pause();
+        playIcon = Icons.play_arrow;      
         status = 'pause';
+        widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
       });
     });
 
     MediaNotification.setListener('play', () {
       setState(() {
         audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+        playIcon = Icons.pause;
         status = 'play';
+        widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
       });
     });
     
     MediaNotification.setListener('next', () {
       setState(() {
         onComplete();
-        showNotification(title.substring(0,20), artist);
+        showNotification(title.substring(0,20), (artist.length >=20 ? artist.substring(0,20):artist));
       });
     });
 
@@ -122,6 +127,15 @@ class _NowPlayingState extends State<NowPlaying> {
     }
   }
 
+  Future<void> showPausedNotification(title, author) async {
+    try {
+      await MediaNotification.show(title: title, author: author);
+      setState(() => status = 'pause');
+    } on PlatformException {
+      print('Exception Found');
+    }
+  }
+
   void initPlayer(){
     audioPlayer = new MusicFinder();
 
@@ -130,6 +144,8 @@ class _NowPlayingState extends State<NowPlaying> {
 
     audioPlayer.setDurationHandler((d) => setState(() {
       duration = d;
+      songDuration = getDuration(duration.inSeconds).toString().substring(3, 7);
+      sliderDuration = duration.inSeconds.toDouble();
     }));
 
     audioPlayer.setPositionHandler((p) => setState(() {
@@ -150,11 +166,14 @@ class _NowPlayingState extends State<NowPlaying> {
         position = new Duration(seconds: 0);
       });
     });
-
-    audioPlayer.stop();
-    _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
-    showNotification(title, artist);
-    widget.songmodel.isPlaying = true;
+    
+    if(widget.playSong) {
+      audioPlayer.stop();
+      // sliderDuration = duration.inSeconds.toDouble();
+      _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
+      showPausedNotification(title, artist);
+      widget.songmodel.isPlaying = true;
+    }
   }
 
   void onComplete() {
@@ -269,7 +288,7 @@ class _NowPlayingState extends State<NowPlaying> {
                       inactiveColor: Colors.grey,
                       value: position.inSeconds.toDouble(),
                       min: 0,
-                      max: duration.inSeconds.toDouble(),
+                      max: sliderDuration,
                       onChanged: (value) {
                         seekToSecond(value);
                         setState(() {
@@ -278,7 +297,7 @@ class _NowPlayingState extends State<NowPlaying> {
                       },
                     ),
                   ),
-                  Text(getDuration(duration.inSeconds).toString().substring(3, 7)),
+                  Text(songDuration),
                 ],
               ),
             ),
@@ -308,11 +327,13 @@ class _NowPlayingState extends State<NowPlaying> {
                     if(widget.songmodel.isPlaying){
                       setState(() {
                         playIcon = Icons.play_arrow;
+                        showNotification(title, artist);
                       });
                       pause();
                     } else {
                       setState(() {
                         playIcon = Icons.pause;
+                        showPausedNotification(title, artist);
                       });
                       audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                     }
