@@ -224,6 +224,14 @@ class _NowPlayingState extends State<NowPlaying> {
     }
   }
 
+  void _onHorizontalDrag(DragEndDetails details) {
+    if(details.primaryVelocity == 0) return; // user have just tapped on screen (no dragging)
+    if (details.primaryVelocity.compareTo(0) == -1)
+      onComplete();
+    else 
+      playPrevious();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -243,11 +251,14 @@ class _NowPlayingState extends State<NowPlaying> {
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
-              child: Container(
-                height: 250.0,
+              child: GestureDetector(
+                onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
                 child: Container(
-                  child: Icon(MaterialCommunityIcons.music_note, size: 250.0),
-                  width: 250,
+                  height: 250.0,
+                  child: Container(
+                    child: Icon(MaterialCommunityIcons.music_note, size: 250.0),
+                    width: 250,
+                  ),
                 ),
               ),
             ),
@@ -258,7 +269,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    title.substring(0,20),
+                    title,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20.0,

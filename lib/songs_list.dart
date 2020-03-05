@@ -44,17 +44,17 @@ class _SongsListState extends State<SongsList> {
         if(equalsIgnoreCase(query, dummySearchList[i].title)){
           dummyListData.add(dummySearchList[i]);
         }
-          setState(() {
-            _songs.clear();
-            _songs = dummyListData;
-          });
+        setState(() {
+          _songs.clear();
+          _songs = dummyListData;
+        });
       }
-        } else {
-          setState(() {
-            _songs.clear();
-            _songs.addAll(duplicateSongs);
-          });
-        }
+    } else {
+      setState(() {
+        _songs.clear();
+        _songs.addAll(duplicateSongs);
+      });
+    }
   }
 
   popUpMenuActions(MenuOptions result, int index){
@@ -66,7 +66,7 @@ class _SongsListState extends State<SongsList> {
         widget.songmodel.currentSong = index;
         break;
       case MenuOptions.addToQueue:
-        // TODO: Handle this case.
+        widget.songmodel.playQueue.add(widget.songmodel.songs[index]);
         break;
       case MenuOptions.goToAlbum:
         // TODO: Handle this case.
@@ -160,11 +160,25 @@ class _SongsListState extends State<SongsList> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 20.0),
                   leading: CircleAvatar(
-                    child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
+                    child: songList[index].albumArt != null ? 
+                            Image.file(File(songList[index].albumArt)): 
+                              Icon(Icons.music_note),
                   ),
-                  title: Text(songList[index].title),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(songList[index].title.length >=20 ? 
+                              songList[index].title.substring(0,20) + '...' 
+                                : songList[index].title + '...'),
+                      Text(songList[index].duration.toString()),
+                    ],
+                  ),
+                  subtitle: Text(songList[index].artist.length >=20 ? 
+                              songList[index].artist.substring(0,20) + '...' 
+                                : songList[index].artist + '...',
+                        style: TextStyle(fontSize: 12.0),),
                   onTap: () {
                     widget.songmodel.currentSong = index;
                     Navigator.push(context, MaterialPageRoute(
@@ -210,98 +224,6 @@ class _SongsListState extends State<SongsList> {
     }
   }
 
-  // {
-  //   Padding(
-  //       padding: EdgeInsets.only(top: 10.0),
-  //       child: FloatingSearchBar.builder(
-  //         itemCount: songList.length,
-  //         itemBuilder: (BuildContext context, int index) {
-  //           return ListTile(
-  //             contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 40.0),
-  //             leading: CircleAvatar(
-  //               child: songList[index].albumArt != null ? Image.file(File(songList[index].albumArt)): Icon(Icons.music_note),
-  //             ),
-  //             title: Text(songList[index].title),
-  //             onTap: () {
-  //               widget.songmodel.currentSong = index;
-  //               Navigator.push(context, MaterialPageRoute(
-  //               builder: (context) => NowPlaying(
-  //                 songmodel: widget.songmodel,
-  //                 ),
-  //               )
-  //             );
-  //             },
-  //             trailing: PopupMenuButton<MenuOptions>(
-  //               onSelected: (MenuOptions result) { 
-  //                 setState(() { 
-  //                   popUpMenuActions(result, index); 
-  //                 }); 
-  //               },
-  //               itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
-  //                 const PopupMenuItem<MenuOptions>(
-  //                   value: MenuOptions.addtoPlaylist,
-  //                   child: Text('Add to Playlist'),
-  //                 ),
-  //                 const PopupMenuItem<MenuOptions>(
-  //                   value: MenuOptions.playNext,
-  //                   child: Text('Play Next'),
-  //                 ),
-  //                 const PopupMenuItem<MenuOptions>(
-  //                   value: MenuOptions.addToQueue,
-  //                   child: Text('Add to queue'),
-  //                 ),
-  //                 const PopupMenuItem<MenuOptions>(
-  //                   value: MenuOptions.goToAlbum,
-  //                   child: Text('Go to album'),
-  //                 ),
-  //               ],
-  //             ),
-  //           );
-  //         },
-  //       trailing: CircleAvatar(
-  //         child: Text("RD"),
-  //       ),
-  //         drawer: Drawer(
-  //           elevation: 0.0,
-  //           child: Container(
-  //             color: Theme.of(context).backgroundColor,
-  //             child: ListView(
-  //               children: <Widget>[
-  //                 Container(
-  //                   height: 150.0,
-  //                   child: DrawerHeader(
-  //                     child: Text(
-  //                       'Walls',
-  //                       style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 20.0
-  //                       ),
-  //                     ),
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.blue,
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 ListTile(
-  //                   onTap: () {
-  //                     Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
-  //                   },
-  //                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-  //                   title: Text(
-  //                     'Settings',
-  //                     style: TextStyle(
-  //                       color: getColor(context),
-  //                     ),
-  //                     ),
-  //                   trailing: Icon(
-  //                     Icons.settings,
-  //                     color: getColor(context),
-  //                     ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
   //       onChanged: (String value) {
   //         filterSearchResults(value);
   //       },
@@ -312,13 +234,4 @@ class _SongsListState extends State<SongsList> {
   //       ),
   //     );
   // }
-
-  getColor(BuildContext context) {
-  var brightness = MediaQuery.of(context).platformBrightness;
-  if (brightness == Brightness.dark)
-    return Colors.white;
-  else
-    return Colors.black;
-  }
-
 }

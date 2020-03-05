@@ -17,6 +17,7 @@ dependencies:
   sliding_up_panel:
   shared_preferences:
   media_notification:
+  grouped_list:
 
 dev_dependencies:
   flutter_test:

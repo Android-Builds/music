@@ -6,6 +6,7 @@ class SongModel {
   var songs = <Song>[];
   var duplicateSongs = <Song>[];
   var playQueue = <Song>[];
+  var albums;
   MusicFinder audioPlayer;
   bool isPlaying = false;
   bool shuffle = true;
@@ -16,11 +17,23 @@ class SongModel {
 
   SongModel(){
     fetchSongs();
+    // fetchAlbums();
   }
 
+  Map<T, List<S>> groupBy<S, T>(Iterable<S> values, T key(S element)) {
+    var map = <T, List<S>>{};
+    for (var element in values) {
+      var list = map.putIfAbsent(key(element), () => []);
+      list.add(element);
+    }
+    return map;
+  }
+
+  // fetchAlbums() {
+  //   albums = Map.fromIterable(songs, key: (e) => e.album, value: (element) => element);
+  // }
+
   fetchSongs() async {
-    // songs = await MusicFinder.allSongs();
-    // audioPlayer = new MusicFinder();
     try {
       songs = await MusicFinder.allSongs();
     } catch (e) {

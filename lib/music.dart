@@ -1,6 +1,7 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:music/albums.dart';
 import 'now_playing.dart';
 import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
@@ -20,9 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   static SongModel songmodel;
   MusicFinder audioPlayer;
-
   String songTitle, songArtist;
-
   Widget playIcon;
 
   _getStringFromSharedPref() async {
@@ -58,6 +57,7 @@ class _HomePageState extends State<HomePage> {
       child: Playlists(),
     ),
     Container(
+      child: Album(songModel: songmodel),
     )
   ];
 
@@ -78,29 +78,6 @@ class _HomePageState extends State<HomePage> {
     setPlayIcon();
     _getStringFromSharedPref();
   }
-
-  // void filterSearchResults(String query) {
-  //   List<String> dummySearchList = List<String>();
-  //   dummySearchList.addAll(duplicateItems);
-  //   if(query.isNotEmpty) {
-  //     List<String> dummyListData = List<String>();
-  //     dummySearchList.forEach((item) {
-  //       if(item.contains(query)) {
-  //         dummyListData.add(item);
-  //       }
-  //     });
-  //     setState(() {
-  //       items.clear();
-  //       items.addAll(dummyListData);
-  //     });
-  //     return;
-  //   } else {
-  //     setState(() {
-  //       items.clear();
-  //       items.addAll(duplicateItems);
-  //     });
-  //   }
-  // }
 
   playLocal(String uri) async {
     await audioPlayer.play(uri, isLocal: true);
