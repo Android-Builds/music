@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       child: Playlists(),
     ),
     Container(
-      child: Album(songModel: songmodel),
+      // child: Album(songModel: songmodel),
     )
   ];
 
