@@ -7,7 +7,6 @@ import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -17,12 +16,29 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+Route _createRoute(SongModel songModel, bool playSong) => PageRouteBuilder(
+  pageBuilder: (context, animation, secondaryAnimation) => 
+    NowPlaying(songmodel: songModel, playSong: playSong),
+  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    var begin = Offset(0.0, 1.0);
+    var end = Offset.zero;
+    var curve = Curves.ease;
+    var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+    return SlideTransition(
+      position: animation.drive(tween),
+      child: child,
+    );
+  },
+);
+
 class _HomePageState extends State<HomePage> {
 
   static SongModel songmodel;
   MusicFinder audioPlayer;
   String songTitle, songArtist;
   Widget playIcon;
+  var startVerticalDragDetails;
+  var updateVerticalDragDetails;
 
   _getStringFromSharedPref() async {
     final pref = await SharedPreferences.getInstance();
@@ -51,13 +67,13 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(
-      child: SongsList(songmodel: songmodel,),
+      child: SongsList(songmodel: songmodel),
     ),
     Container(
       child: Playlists(),
     ),
     Container(
-      // child: Album(songModel: songmodel),
+      child: Album(songModel: songmodel),
     )
   ];
 
@@ -87,6 +103,14 @@ class _HomePageState extends State<HomePage> {
     await audioPlayer.pause();
   }
 
+  void _onVerticalDrag(DragEndDetails details) {
+    if(details.primaryVelocity == 0) return;
+    if (details.primaryVelocity.compareTo(0) == 1)
+      _createRoute(songmodel, false);
+    else 
+      return;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,51 +122,53 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: <Widget>[
               _widgetOptions.elementAt(_selectedIndex),
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NowPlaying(songmodel: songmodel),)),
-                child: SlidingUpPanel(
-                  panel: Text('Hi'),
-                  // panel: NowPlaying(songmodel: songmodel, songArtist: songArtist, songTitle: songTitle),
-                  collapsed: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Hello',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).push(_createRoute(songmodel, false)),
+                  child: Container(
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Hi',
-                            ),
-                          ],
+                              Text(
+                                'Hi',
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 100.0,),
-                      IconButton(
-                        icon: playIcon,
-                        onPressed: () {
-                          if(songmodel.isPlaying){
-                            pause();
-                          } else {
-                            audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
-                            }
-                          songmodel.isPlaying = !songmodel.isPlaying;
-                          setPlayIcon();
-                          print(songmodel.isPlaying);
-                        },
-                      ),
-                    ],
+                        SizedBox(width: 100.0,),
+                        IconButton(
+                          icon: playIcon,
+                          onPressed: () {
+                            if(songmodel.isPlaying){
+                              pause();
+                            } else {
+                              audioPlayer.play(songmodel.songs[songmodel.currentSong].uri);
+                              }
+                            songmodel.isPlaying = !songmodel.isPlaying;
+                            setPlayIcon();
+                            print(songmodel.isPlaying);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(5.0),
-                  minHeight: 50.0,
-                  maxHeight: 1000.0,
                 ),
               ),
             ],
@@ -160,7 +186,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.playlist_play),
               title: Text('Playlist'),
-            ),            
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.album),
               title: Text('Albums'),

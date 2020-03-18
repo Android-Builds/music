@@ -5,7 +5,6 @@ import 'package:media_notification/media_notification.dart';
 import 'package:music/song_model.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
-
 import 'constants.dart';
 
 class NowPlaying extends StatefulWidget {
@@ -352,6 +351,7 @@ class _NowPlayingState extends State<NowPlaying> {
                       });
                       audioPlayer.play(widget.songmodel.songs[widget.songmodel.currentSong].uri);
                     }
+                    //widget.setPlayIcon();
                     widget.songmodel.isPlaying = !widget.songmodel.isPlaying;
                   },
                 ),

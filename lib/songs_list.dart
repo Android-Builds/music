@@ -115,9 +115,12 @@ class _SongsListState extends State<SongsList> {
                         padding: const EdgeInsets.all(10.0),
                         child: Stack(
                           children: <Widget>[
-                            IconButton(
-                              onPressed: () => Scaffold.of(context).openDrawer(),
-                              icon: Icon(Icons.drag_handle),
+                            Positioned(
+                              left: 30.0, top:12.0,
+                              child: IconButton(
+                                onPressed: () => Scaffold.of(context).openDrawer(),
+                                icon: Icon(Icons.drag_handle, color: Colors.black),
+                              ),
                             ),
                             TextField(
                               style: TextStyle(
@@ -126,15 +129,10 @@ class _SongsListState extends State<SongsList> {
                               textAlignVertical: TextAlignVertical.bottom,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(color: Colors.blue, width: 0.5),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(color: Colors.grey, width: 0.5),
-                                ),
-                                hintText: 'Search..',
+                                border: InputBorder.none,
+                                fillColor: Colors.grey[100],
+                                filled: true,
+                                hintText: 'Search',
                               ),
                             ),
                             Positioned(
@@ -166,15 +164,9 @@ class _SongsListState extends State<SongsList> {
                             Image.file(File(songList[index].albumArt)): 
                               Icon(Icons.music_note),
                   ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(songList[index].title.length >=20 ? 
-                              songList[index].title.substring(0,20) + '...' 
-                                : songList[index].title + '...'),
-                      Text(songList[index].duration.toString()),
-                    ],
-                  ),
+                  title: Text(songList[index].title.length >=20 ? 
+                          songList[index].title.substring(0,20) + '...' 
+                            : songList[index].title + '...'),
                   subtitle: Text(songList[index].artist.length >=20 ? 
                               songList[index].artist.substring(0,20) + '...' 
                                 : songList[index].artist + '...',
