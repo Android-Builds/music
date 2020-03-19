@@ -104,55 +104,75 @@ class _SongsListState extends State<SongsList> {
           SliverAppBar(
             backgroundColor: Colors.transparent,
             floating: true,
-            flexibleSpace: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Expanded(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned(
-                              left: 30.0, top:12.0,
-                              child: IconButton(
-                                onPressed: () => Scaffold.of(context).openDrawer(),
-                                icon: Icon(Icons.drag_handle, color: Colors.black),
-                              ),
-                            ),
-                            TextField(
-                              style: TextStyle(
-                                fontSize: 20.0,
-                              ),
-                              textAlignVertical: TextAlignVertical.bottom,
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                fillColor: Colors.grey[100],
-                                filled: true,
-                                hintText: 'Search',
-                              ),
-                            ),
-                            Positioned(
-                              right: 15.0, top: 12.0,
-                              child: GestureDetector(
-                                onTapDown: (TapDownDetails details) {
-                                  _showPopupMenu(details.globalPosition);
-                                },
-                                child: Icon(Icons.sort),
-                              ),
-                            ),
-                          ]
+            flexibleSpace: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        left: 30.0, top:12.0,
+                        child: IconButton(
+                          onPressed: () => Scaffold.of(context).openDrawer(),
+                          icon: Icon(Icons.drag_handle, color: Colors.black),
                         ),
                       ),
-                    ),
+                      TextField(
+                        style: TextStyle(
+                          fontSize: 20.0,
+                        ),
+                        textAlignVertical: TextAlignVertical.bottom,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          fillColor: Colors.grey[100],
+                          filled: true,
+                          hintText: 'Search',
+                        ),
+                      ),
+                      Positioned(
+                        right: 15.0, top: 12.0,
+                        child: GestureDetector(
+                          onTapDown: (TapDownDetails details) {
+                            _showPopupMenu(details.globalPosition);
+                          },
+                          child: Icon(Icons.sort),
+                        ),
+                      ),
+                    ]
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.grey[300],
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.songmodel.shuffle = true;
+                      widget.songmodel.getRandom();
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => NowPlaying(
+                          songmodel: widget.songmodel,
+                          playSong: true),
+                        )
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        'Shuffle All',
+                        style: TextStyle(
+                          color: Colors.black
+                          ),
+                        ),
+                    ),
+                    ),
+                  )
+              ],
             ),
-            expandedHeight: 70,
+            expandedHeight: 110,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
