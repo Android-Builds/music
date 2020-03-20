@@ -1,9 +1,11 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:media_notification/media_notification.dart';
 import 'package:music/song_model.dart';
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'constants.dart';
 
@@ -178,18 +180,21 @@ class _NowPlayingState extends State<NowPlaying> {
 
   void onComplete() {
     audioPlayer.stop();
-    if(widget.songmodel.repeatMode == 'OFF' && widget.songmodel.currentSong == widget.songmodel.songs.length-1){
+    if(widget.songmodel.repeatMode == 'OFF' && 
+    widget.songmodel.currentSong == widget.songmodel.songs.length-1) {
       audioPlayer.stop();
       setState(() {
         widget.songmodel.isPlaying = false;
         position = position = new Duration(seconds:0);
         playIcon = Icons.play_arrow;
-      });        
+      });      
       return;
     }
     widget.songmodel.getNext();
     _playLocal(widget.songmodel.songs[widget.songmodel.currentSong].uri);
     setState(() {
+      widget.songmodel.isPlaying = true;
+      playIcon = Icons.pause;
       title = widget.songmodel.songs[widget.songmodel.currentSong].title;
       artist = widget.songmodel.songs[widget.songmodel.currentSong].artist;
     });
@@ -250,16 +255,44 @@ class _NowPlayingState extends State<NowPlaying> {
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
-              child: GestureDetector(
-                onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
-                child: Container(
-                  height: 250.0,
-                  child: Container(
-                    child: Icon(MaterialCommunityIcons.music_note, size: 250.0),
-                    width: 250,
-                  ),
+              child: Container(
+                height: 250.0,
+                child: new Swiper(
+                  index: widget.songmodel.currentSong,
+                  onIndexChanged: (i) {
+                    if(i > widget.songmodel.currentSong) {
+                      onComplete();
+                    } else {
+                      playPrevious();
+                    }
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      width: 250.0,
+                      color: Colors.black,
+                      child: widget.songmodel.songs[widget.songmodel.currentSong].albumArt != null ? 
+                        Image.file(File(widget.songmodel.songs[widget.songmodel.currentSong].albumArt)) : 
+                        Icon(
+                        MaterialCommunityIcons.music_note, 
+                        size: 250.0
+                      )
+                    );
+                  },
+                  itemCount: widget.songmodel.songs.length,
+                  viewportFraction: 0.8,
+                  scale: 0.9,
                 ),
               ),
+              // child: GestureDetector(
+              //   onHorizontalDragEnd: (DragEndDetails details) => _onHorizontalDrag(details),
+              //   child: Container(
+              //     height: 250.0,
+              //     child: Container(
+              //       child: Icon(MaterialCommunityIcons.music_note, size: 250.0),
+              //       width: 250,
+              //     ),
+              //   ),
+              // ),
             ),
             SizedBox(height: 20.0),
             Padding(

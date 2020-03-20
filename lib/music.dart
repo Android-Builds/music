@@ -65,6 +65,45 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future _playLocal(String uri) async {
+    await audioPlayer.play(uri, isLocal: true);
+  }
+
+  Future pause() async {
+    await audioPlayer.pause();
+  }
+
+  void playPrevious() {
+    audioPlayer.stop();
+    songmodel.getPrev();
+    _playLocal(songmodel.songs[songmodel.currentSong].uri);
+    setState(() {
+      songTitle = songmodel.songs[songmodel.currentSong].title;
+      songArtist = songmodel.songs[songmodel.currentSong].title;
+    });
+  }
+
+  void onComplete() {
+    audioPlayer.stop();
+    if(songmodel.repeatMode == 'OFF' && 
+    songmodel.currentSong == songmodel.songs.length-1) {
+      audioPlayer.stop();
+      setState(() {
+        songmodel.isPlaying = false;
+        playIcon = Icon(MaterialCommunityIcons.play_circle, color: Colors.red[900],);
+      });      
+      return;
+    }
+    songmodel.getNext();
+    _playLocal(songmodel.songs[songmodel.currentSong].uri);
+    setState(() {
+      songmodel.isPlaying = true;
+      playIcon = Icon(MaterialCommunityIcons.pause_circle);
+      songTitle = songmodel.songs[songmodel.currentSong].title;
+      songArtist = songmodel.songs[songmodel.currentSong].artist;
+    });
+  }
+
   static List<Widget> _widgetOptions = <Widget>[
     Container(
       child: SongsList(songmodel: songmodel),
@@ -97,18 +136,6 @@ class _HomePageState extends State<HomePage> {
 
   playLocal(String uri) async {
     await audioPlayer.play(uri, isLocal: true);
-  }
-
-  pause() async {
-    await audioPlayer.pause();
-  }
-
-  void _onVerticalDrag(DragEndDetails details) {
-    if(details.primaryVelocity == 0) return;
-    if (details.primaryVelocity.compareTo(0) == 1)
-      _createRoute(songmodel, false);
-    else 
-      return;
   }
 
   @override
@@ -154,6 +181,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 100.0,),
                         IconButton(
+                          icon: Icon(MaterialCommunityIcons.skip_previous),
+                          onPressed: () => playPrevious(),
+                        ),
+                        IconButton(
                           icon: playIcon,
                           onPressed: () {
                             if(songmodel.isPlaying){
@@ -165,6 +196,10 @@ class _HomePageState extends State<HomePage> {
                             setPlayIcon();
                             print(songmodel.isPlaying);
                           },
+                        ),
+                        IconButton(
+                          icon: Icon(MaterialCommunityIcons.skip_next), 
+                          onPressed: () => onComplete(),
                         ),
                       ],
                     ),
@@ -200,3 +235,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+//TODO: probably remove next and previous controls

@@ -11,13 +11,11 @@ dependencies:
     sdk: flutter
   cupertino_icons:
   flutter_icons:
-  floating_search_bar:
   flute_music_player:
   quiver:
-  sliding_up_panel:
   shared_preferences:
   media_notification:
-  grouped_list:
+  flutter_swiper:
 
 dev_dependencies:
   flutter_test:
