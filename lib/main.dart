@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/constants.dart';
-import 'package:music/music.dart';
+import 'package:music/screens/homepage.dart';
+import 'package:music/screens/music.dart';
 
 void main() {
   runApp( MyApp());
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
    void initState(){
      super.initState();
      Timer(Duration(seconds: 2), () {
-      Route route = MaterialPageRoute(builder: (context) => HomePage());
+      Route route = MaterialPageRoute(builder: (context) => HomePage2());
       Navigator.pushReplacement(context, route);
     });
   }
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Orchid Music',
+                    'Music',
                     style: TextStyle(
                       color:getColor(context),
                       fontSize: 30.0,

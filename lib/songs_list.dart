@@ -103,6 +103,7 @@ class _SongsListState extends State<SongsList> {
         slivers: <Widget>[
           SliverAppBar(
             backgroundColor: Colors.transparent,
+            elevation: 0.0,
             floating: true,
             flexibleSpace: Column(
               children: <Widget>[

@@ -2,7 +2,7 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/albums.dart';
-import 'now_playing.dart';
+import 'package:music/now_playing.dart';
 import 'package:music/playlists.dart';
 import 'package:music/song_model.dart';
 import 'package:music/songs_list.dart';
