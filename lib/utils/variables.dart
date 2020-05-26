@@ -10,5 +10,6 @@ List<SongInfo> musics = new List<SongInfo>();
 List<Song> savedsongs = new List<Song>();
 bool disco = false;
 bool disco2 = false;
+bool randomcol = false;
 StreamController<bool> discoController;
 StreamController<bool> discoController2;

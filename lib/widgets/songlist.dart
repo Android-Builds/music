@@ -20,14 +20,23 @@ class _SongListState extends State<SongList> {
   int r1, b1, g1;
   double o;
 
+  getColors() {
+    r = r1 = Random().nextInt(255);
+    g = g1 = Random().nextInt(255);
+    b = b1 = Random().nextInt(255);
+    o = Random().nextDouble();
+  }
+
   void initState() {
     super.initState();
+    getColors();
     discoController = new StreamController();
     discoController2 = new StreamController();
     discoController.stream.listen((event) {
       setState(() {
         if (event) {
           updateParams();
+          randomcol = false;
         } else {
           periodicSub.cancel();
         }
@@ -37,6 +46,7 @@ class _SongListState extends State<SongList> {
       setState(() {
         if (event) {
           updateParams2();
+          randomcol = true;
         } else {
           periodicSub2.cancel();
         }
@@ -69,10 +79,6 @@ class _SongListState extends State<SongList> {
 
   @override
   Widget build(BuildContext context) {
-    r = r1 = Random().nextInt(255);
-    g = g1 = Random().nextInt(255);
-    b = b1 = Random().nextInt(255);
-    o = Random().nextDouble();
     return FutureBuilder(
         future: songs,
         builder: (_, snapshot) {
@@ -80,16 +86,14 @@ class _SongListState extends State<SongList> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
-                  if (disco2) {
-                    r1 = Random().nextInt(255);
-                    g1 = Random().nextInt(255);
-                    b1 = Random().nextInt(255);
+                  if (disco2 || randomcol) {
+                    r = Random().nextInt(255);
+                    g = Random().nextInt(255);
+                    b = Random().nextInt(255);
                   }
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: !disco2
-                          ? Color.fromRGBO(r, g, b, o)
-                          : Color.fromRGBO(r1, g1, b1, o),
+                      backgroundColor: Color.fromRGBO(r, g, b, o),
                       foregroundColor:
                           MediaQuery.of(context).platformBrightness ==
                                   Brightness.dark
