@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
@@ -54,6 +55,9 @@ class _SongListState extends State<SongList> {
 
   @override
   Widget build(BuildContext context) {
+    int r = Random().nextInt(255);
+    int g = Random().nextInt(255);
+    int b = Random().nextInt(255);
     return FutureBuilder(
         future: songs,
         builder: (_, snapshot) {
@@ -62,6 +66,12 @@ class _SongListState extends State<SongList> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Color.fromRGBO(r, g, b, 1),
+                      child: snapshot.data[index].albumArtwork != null
+                          ? Image.file(snapshot.data[index].albumArtwork)
+                          : Icon(Icons.music_note),
+                    ),
                     title: Text(snapshot.data[index].title),
                   );
                 });
