@@ -12,63 +12,40 @@ class SongList extends StatefulWidget {
 }
 
 StreamSubscription periodicSub;
+StreamSubscription periodicSub2;
 
 class _SongListState extends State<SongList> {
   List<SongInfo> songlist = new List<SongInfo>();
   int r, g, b;
+  int r1, b1, g1;
   double o;
 
   void initState() {
     super.initState();
     discoController = new StreamController();
+    discoController2 = new StreamController();
     discoController.stream.listen((event) {
       setState(() {
-        if(event) {
+        if (event) {
           updateParams();
         } else {
           periodicSub.cancel();
         }
-        print('Updated');
       });
     });
-    // setState(() {
-    //   songlist = songs;
-    // });
-    // Timer(Duration(seconds: 20), () {
-    //   songlist.forEach((element) {
-    //     if (element.isMusic) {
-    //       if (!musics.contains(element)) {
-    //         musics.add(element);
-    //       }
-    //     }
-    //     // if(element.isMusic) {
-    //     //   savedsongs.add(new Song(
-    //     //     album: element.album,
-    //     //     albumArtwork: element.albumArtwork,
-    //     //     albumID: element.albumId,
-    //     //     artist: element.albumId,
-    //     //     artistID: element.artistId,
-    //     //     duration: element.duration,
-    //     //     bookmark: element.bookmark,
-    //     //     filePath: element.filePath,
-    //     //     fileSize: element.fileSize,
-    //     //     year: element.year,
-    //     //     composer: element.composer,
-    //     //     track: element.track,
-    //     //     title: element.title
-    //     //   ));
-    //     // }
-    //   });
-    // });
-    // Timer(Duration(seconds: 1), () {
-    //   //print(savedsongs.length);
-    //   print(musics.length);
-    //   // print(songs.length);
-    // });
+    discoController2.stream.listen((event) {
+      setState(() {
+        if (event) {
+          updateParams2();
+        } else {
+          periodicSub2.cancel();
+        }
+      });
+    });
   }
 
   updateParams() {
-    periodicSub = periodicSub =
+    periodicSub =
         new Stream.periodic(const Duration(milliseconds: 500)).listen((_) {
       setState(() {
         r = Random().nextInt(255);
@@ -79,11 +56,22 @@ class _SongListState extends State<SongList> {
     });
   }
 
+  updateParams2() {
+    periodicSub2 =
+        new Stream.periodic(const Duration(milliseconds: 500)).listen((_) {
+      setState(() {
+        // r1 = Random().nextInt(255);
+        // b1 = Random().nextInt(255);
+        // g1 = Random().nextInt(255);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    r = Random().nextInt(255);
-    g = Random().nextInt(255);
-    b = Random().nextInt(255);
+    r = r1 = Random().nextInt(255);
+    g = g1 = Random().nextInt(255);
+    b = b1 = Random().nextInt(255);
     o = Random().nextDouble();
     return FutureBuilder(
         future: songs,
@@ -92,9 +80,16 @@ class _SongListState extends State<SongList> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
+                  if (disco2) {
+                    r1 = Random().nextInt(255);
+                    g1 = Random().nextInt(255);
+                    b1 = Random().nextInt(255);
+                  }
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Color.fromRGBO(r, g, b, o),
+                      backgroundColor: !disco2
+                          ? Color.fromRGBO(r, g, b, o)
+                          : Color.fromRGBO(r1, g1, b1, o),
                       foregroundColor:
                           MediaQuery.of(context).platformBrightness ==
                                   Brightness.dark

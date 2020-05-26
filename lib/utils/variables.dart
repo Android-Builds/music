@@ -9,4 +9,6 @@ Future<List<SongInfo>> songs;
 List<SongInfo> musics = new List<SongInfo>();
 List<Song> savedsongs = new List<Song>();
 bool disco = false;
+bool disco2 = false;
 StreamController<bool> discoController;
+StreamController<bool> discoController2;

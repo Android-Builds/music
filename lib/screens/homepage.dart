@@ -67,15 +67,17 @@ class _HomePage2State extends State<HomePage2> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      discoController.add(disco = !disco);
-                      print(disco);
-                    },
-                    child: Icon(Icons.disc_full),
-                  ),
+                IconButton(
+                  onPressed: () {
+                    discoController.add(disco = !disco);
+                  },
+                  icon: Icon(Icons.disc_full),
+                ),                
+                IconButton(
+                  onPressed: () {
+                    discoController2.add(disco2 = !disco2);
+                  },
+                  icon: Icon(Icons.party_mode),
                 ),
               ],
             ),
