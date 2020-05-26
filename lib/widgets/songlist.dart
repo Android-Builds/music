@@ -207,6 +207,19 @@ class _SongListState extends State<SongList> {
             }
           },
         ),
+        Positioned(
+          right: 20,
+          top: 60,
+          child: FloatingActionButton(
+            onPressed: () {},
+            mini: true,
+            backgroundColor: Color.fromRGBO(r, g, b, o > 0.8 ? 0 : 0.9),
+            child: Icon(
+              Icons.search,
+              size: 20.0,
+            ),
+          ),
+        )
       ],
     );
   }
