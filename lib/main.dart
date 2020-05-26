@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -30,6 +29,18 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.grey,
         ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.white
+          ),
+          bodyText2: TextStyle(
+            color: Colors.white
+          ),
+          subtitle1: TextStyle(
+            color: Colors.white
+          ),
+        ),
+        canvasColor: Colors.black
       ),
       home: SplashScreen(),
     );
@@ -54,6 +65,7 @@ class MyApp extends StatelessWidget {
      super.initState();
     //  songModel2 = new SongModel();
      fetchSongs();
+     darkmode = MediaQuery.of(context).platformBrightness == Brightness.dark;
      Timer(Duration(seconds: 2), () {
       Route route = MaterialPageRoute(builder: (context) => HomePage2());
       Navigator.pushReplacement(context, route);
