@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
-import 'package:music/albums.dart';
 import 'package:music/playlists.dart';
-import 'package:music/songs_list.dart';
-import 'package:music/utils/variables.dart';
+
 import 'package:music/widgets/songlist.dart';
 
 class HomePage2 extends StatefulWidget {
@@ -43,52 +40,52 @@ class _HomePage2State extends State<HomePage2> {
       systemNavigationBarIconBrightness: Brightness.dark, //bottom bar icons
     ));
     return Scaffold(
-      appBar: PreferredSize(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.menu),
-                ),
-                Flexible(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey[350],
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 40.0),
-                          hintText: 'Search ...',
-                          border: InputBorder.none),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    if(disco2) {
-                      discoController2.add(disco2 = false);
-                    }
-                    discoController.add(disco = !disco);
-                  },
-                  icon: Icon(Icons.disc_full),
-                ),                
-                IconButton(
-                  onPressed: () {
-                    if(disco) {
-                      discoController.add(disco = false);
-                    }
-                    discoController2.add(disco2 = !disco2);
-                  },
-                  icon: Icon(Icons.party_mode),
-                ),
-              ],
-            ),
-          ),
-          preferredSize: Size.fromHeight(50.0)),
+      // PreferredSize(
+      //     child: Padding(
+      //       padding: const EdgeInsets.only(top: 24.0),
+      //       child: Row(
+      //         children: [
+      //           IconButton(
+      //             onPressed: () {},
+      //             icon: Icon(Icons.menu),
+      //           ),
+      //           Flexible(
+      //             child: Container(
+      //               padding: EdgeInsets.symmetric(horizontal: 20.0),
+      //               decoration: BoxDecoration(
+      //                   color: Colors.grey[350],
+      //                   borderRadius: BorderRadius.circular(10.0)),
+      //               child: TextFormField(
+      //                 decoration: InputDecoration(
+      //                     contentPadding:
+      //                         EdgeInsets.symmetric(horizontal: 40.0),
+      //                     hintText: 'Search ...',
+      //                     border: InputBorder.none),
+      //               ),
+      //             ),
+      //           ),
+      //           IconButton(
+      //             onPressed: () {
+      //               if(disco2) {
+      //                 discoController2.add(disco2 = false);
+      //               }
+      //               discoController.add(disco = !disco);
+      //             },
+      //             icon: Icon(Icons.disc_full),
+      //           ),                
+      //           IconButton(
+      //             onPressed: () {
+      //               if(disco) {
+      //                 discoController.add(disco = false);
+      //               }
+      //               discoController2.add(disco2 = !disco2);
+      //             },
+      //             icon: Icon(Icons.party_mode),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //     preferredSize: Size.fromHeight(50.0)),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
