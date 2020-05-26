@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music/constants.dart';
 import 'package:music/screens/homepage.dart';
-import 'package:music/screens/music.dart';
+import 'package:music/utils/variables.dart';
 
 void main() {
   runApp( MyApp());
@@ -39,9 +41,19 @@ class MyApp extends StatelessWidget {
  }
  
  class _SplashScreenState extends State<SplashScreen> {
+
+   final FlutterAudioQuery audioQuery = FlutterAudioQuery();
+
+   fetchSongs() async {
+     //songs = await MusicFinder.allSongs();
+     songs = await audioQuery.getSongs();
+   }
+
    @override
    void initState(){
      super.initState();
+    //  songModel2 = new SongModel();
+     fetchSongs();
      Timer(Duration(seconds: 2), () {
       Route route = MaterialPageRoute(builder: (context) => HomePage2());
       Navigator.pushReplacement(context, route);

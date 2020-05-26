@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music/albums.dart';
+import 'package:music/playlists.dart';
+import 'package:music/songs_list.dart';
+import 'package:music/utils/variables.dart';
+import 'package:music/widgets/songlist.dart';
 
 class HomePage2 extends StatefulWidget {
   @override
@@ -8,6 +14,19 @@ class HomePage2 extends StatefulWidget {
 
 class _HomePage2State extends State<HomePage2> {
   int _selectedIndex = 0;
+  // static SongModel songmodel;
+
+  List<Widget> _widgetOptions = <Widget>[
+    Container(
+      child: SongList(),
+    ),
+    Container(
+      child: Playlists(),
+    ),
+    Container(
+      child: Text('Hello'),
+    )
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -56,6 +75,9 @@ class _HomePage2State extends State<HomePage2> {
             ),
           ),
           preferredSize: Size.fromHeight(50.0)),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).backgroundColor,

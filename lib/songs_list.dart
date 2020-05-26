@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:music/now_playing.dart';
 import 'package:music/song_model.dart';
+import 'package:music/utils/variables.dart';
 import 'package:quiver/strings.dart';
 
 class SongsList extends StatefulWidget {
@@ -24,38 +25,38 @@ class _SongsListState extends State<SongsList> {
   @override
   void initState(){
     super.initState();
-    initSongs();
+    // initSongs();
   }
 
-  Future<void> initSongs() async {
-    audioPlayer = new MusicFinder();
-    await MusicFinder.allSongs();
-    setState(() {
-     widget.songmodel.duplicateSongs = widget.songmodel.songs;
-    });
-  }
+  // Future<void> initSongs() async {
+  //   audioPlayer = new MusicFinder();
+  //   await MusicFinder.allSongs();
+  //   setState(() {
+  //    widget.songmodel.duplicateSongs = widget.songmodel.songs;
+  //   });
+  // }
 
-  void filterSearchResults(String query) {
-    List<Song> dummySearchList = List<Song>();
-    dummySearchList = duplicateSongs;
-    if(query.isNotEmpty) {
-      List<Song> dummyListData = List<Song>();
-      for(int i=0;i<duplicateSongs.length;i++){
-        if(equalsIgnoreCase(query, dummySearchList[i].title)){
-          dummyListData.add(dummySearchList[i]);
-        }
-        setState(() {
-          _songs.clear();
-          _songs = dummyListData;
-        });
-      }
-    } else {
-      setState(() {
-        _songs.clear();
-        _songs.addAll(duplicateSongs);
-      });
-    }
-  }
+  // void filterSearchResults(String query) {
+  //   List<Song> dummySearchList = List<Song>();
+  //   dummySearchList = duplicateSongs;
+  //   if(query.isNotEmpty) {
+  //     List<Song> dummyListData = List<Song>();
+  //     for(int i=0;i<duplicateSongs.length;i++){
+  //       if(equalsIgnoreCase(query, dummySearchList[i].title)){
+  //         dummyListData.add(dummySearchList[i]);
+  //       }
+  //       setState(() {
+  //         _songs.clear();
+  //         _songs = dummyListData;
+  //       });
+  //     }
+  //   } else {
+  //     setState(() {
+  //       _songs.clear();
+  //       _songs.addAll(duplicateSongs);
+  //     });
+  //   }
+  // }
 
   popUpMenuActions(MenuOptions result, int index){
     switch(result){
@@ -87,12 +88,12 @@ class _SongsListState extends State<SongsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: getSongs(widget.songmodel.duplicateSongs),
+      child: getSongs(),
     );
   }
 
-  getSongs(List<Song> songList){
-    if (songList.length == null){
+  getSongs(){
+    if (songs.length == null){
       return Expanded(
         child: Center(
           child: CircularProgressIndicator(),
@@ -101,96 +102,96 @@ class _SongsListState extends State<SongsList> {
     } else {
       return CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            floating: true,
-            flexibleSpace: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        left: 30.0, top:12.0,
-                        child: IconButton(
-                          onPressed: () => Scaffold.of(context).openDrawer(),
-                          icon: Icon(Icons.drag_handle, color: Colors.black),
-                        ),
-                      ),
-                      TextField(
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                        textAlignVertical: TextAlignVertical.bottom,
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: Colors.grey[100],
-                          filled: true,
-                          hintText: 'Search',
-                        ),
-                      ),
-                      Positioned(
-                        right: 15.0, top: 12.0,
-                        child: GestureDetector(
-                          onTapDown: (TapDownDetails details) {
-                            _showPopupMenu(details.globalPosition);
-                          },
-                          child: Icon(Icons.sort),
-                        ),
-                      ),
-                    ]
-                  ),
-                ),
-                Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.grey[300],
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.songmodel.shuffle = true;
-                      widget.songmodel.getRandom();
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => NowPlaying(
-                          songmodel: widget.songmodel,
-                          playSong: true),
-                        )
-                      );
-                    },
-                    child: Center(
-                      child: Text(
-                        'Shuffle All',
-                        style: TextStyle(
-                          color: Colors.black
-                          ),
-                        ),
-                    ),
-                    ),
-                  )
-              ],
-            ),
-            expandedHeight: 110,
-          ),
+          // SliverAppBar(
+          //   backgroundColor: Colors.transparent,
+          //   elevation: 0.0,
+          //   floating: true,
+          //   flexibleSpace: Column(
+          //     children: <Widget>[
+          //       Padding(
+          //         padding: const EdgeInsets.all(10.0),
+          //         child: Stack(
+          //           children: <Widget>[
+          //             Positioned(
+          //               left: 30.0, top:12.0,
+          //               child: IconButton(
+          //                 onPressed: () => Scaffold.of(context).openDrawer(),
+          //                 icon: Icon(Icons.drag_handle, color: Colors.black),
+          //               ),
+          //             ),
+          //             TextField(
+          //               style: TextStyle(
+          //                 fontSize: 20.0,
+          //               ),
+          //               textAlignVertical: TextAlignVertical.bottom,
+          //               textAlign: TextAlign.center,
+          //               decoration: InputDecoration(
+          //                 border: InputBorder.none,
+          //                 fillColor: Colors.grey[100],
+          //                 filled: true,
+          //                 hintText: 'Search',
+          //               ),
+          //             ),
+          //             Positioned(
+          //               right: 15.0, top: 12.0,
+          //               child: GestureDetector(
+          //                 onTapDown: (TapDownDetails details) {
+          //                   _showPopupMenu(details.globalPosition);
+          //                 },
+          //                 child: Icon(Icons.sort),
+          //               ),
+          //             ),
+          //           ]
+          //         ),
+          //       ),
+          //       Container(
+          //         width: 100,
+          //         height: 40,
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(10.0),
+          //           color: Colors.grey[300],
+          //         ),
+          //         child: GestureDetector(
+          //           onTap: () {
+          //             widget.songmodel.shuffle = true;
+          //             widget.songmodel.getRandom();
+          //             Navigator.push(context, MaterialPageRoute(
+          //               builder: (context) => NowPlaying(
+          //                 songmodel: widget.songmodel,
+          //                 playSong: true),
+          //               )
+          //             );
+          //           },
+          //           child: Center(
+          //             child: Text(
+          //               'Shuffle All',
+          //               style: TextStyle(
+          //                 color: Colors.black
+          //                 ),
+          //               ),
+          //           ),
+          //           ),
+          //         )
+          //     ],
+          //   ),
+          //   expandedHeight: 110,
+          // ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return ListTile(
                   contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 20.0),
-                  leading: CircleAvatar(
-                    child: songList[index].albumArt != null ? 
-                            Image.file(File(songList[index].albumArt)): 
-                              Icon(Icons.music_note),
-                  ),
-                  title: Text(songList[index].title.length >=20 ? 
-                          songList[index].title.substring(0,20) + '...' 
-                            : songList[index].title + '...'),
-                  subtitle: Text(songList[index].artist.length >=20 ? 
-                              songList[index].artist.substring(0,20) + '...' 
-                                : songList[index].artist + '...',
+                  // leading: CircleAvatar(
+                  //   child: songs[index].albumArt != null ? 
+                  //           Image.file(File(songs[index].albumArt)): 
+                  //             Icon(Icons.music_note),
+                  // ),
+                  title: Text(songs[index].title.length >=20 ? 
+                          songs[index].title.substring(0,20) + '...' 
+                            : songs[index].title + '...'),
+                  subtitle: Text(songs[index].artist.length >=20 ? 
+                              songs[index].artist.substring(0,20) + '...' 
+                                : songs[index].artist + '...',
                         style: TextStyle(fontSize: 12.0),),
                   onTap: () {
                     widget.songmodel.currentSong = index;
@@ -229,7 +230,7 @@ class _SongsListState extends State<SongsList> {
                   ),
                 );
               },
-              childCount: songList.length,
+              childCount: songs.length,
             ),
           ),
         ],
