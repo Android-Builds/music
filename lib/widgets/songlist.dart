@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:lottie/lottie.dart';
 import 'package:music/model/song.dart';
 import 'package:music/utils/variables.dart';
 
@@ -66,7 +67,17 @@ class _SongListState extends State<SongList> {
                 });
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LottieBuilder.asset(
+                    'assets/loading.json',
+                    height: 200.0,
+                  ),
+                  SizedBox(height: 20.0),
+                  Text('Loading media, please wait ...')
+                ],
+              ),
             );
           }
         });

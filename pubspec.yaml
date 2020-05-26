@@ -17,6 +17,7 @@ dependencies:
   media_notification:
   flutter_swiper:
   flutter_audio_query:
+  lottie:
 
 dev_dependencies:
   flutter_test:
