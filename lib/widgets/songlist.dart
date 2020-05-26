@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music/model/song.dart';
 import 'package:music/utils/variables.dart';
 
 class SongList extends StatefulWidget {
@@ -12,11 +11,26 @@ class SongList extends StatefulWidget {
   _SongListState createState() => _SongListState();
 }
 
+StreamSubscription periodicSub;
+
 class _SongListState extends State<SongList> {
   List<SongInfo> songlist = new List<SongInfo>();
+  int r, g, b;
+  double o;
 
   void initState() {
     super.initState();
+    discoController = new StreamController();
+    discoController.stream.listen((event) {
+      setState(() {
+        if(event) {
+          updateParams();
+        } else {
+          periodicSub.cancel();
+        }
+        print('Updated');
+      });
+    });
     // setState(() {
     //   songlist = songs;
     // });
@@ -53,11 +67,24 @@ class _SongListState extends State<SongList> {
     // });
   }
 
+  updateParams() {
+    periodicSub = periodicSub =
+        new Stream.periodic(const Duration(milliseconds: 500)).listen((_) {
+      setState(() {
+        r = Random().nextInt(255);
+        g = Random().nextInt(255);
+        b = Random().nextInt(255);
+        o = Random().nextDouble();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    int r = Random().nextInt(255);
-    int g = Random().nextInt(255);
-    int b = Random().nextInt(255);
+    r = Random().nextInt(255);
+    g = Random().nextInt(255);
+    b = Random().nextInt(255);
+    o = Random().nextDouble();
     return FutureBuilder(
         future: songs,
         builder: (_, snapshot) {
@@ -67,7 +94,12 @@ class _SongListState extends State<SongList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Color.fromRGBO(r, g, b, 1),
+                      backgroundColor: Color.fromRGBO(r, g, b, o),
+                      foregroundColor:
+                          MediaQuery.of(context).platformBrightness ==
+                                  Brightness.dark
+                              ? Colors.black
+                              : Colors.white,
                       child: snapshot.data[index].albumArtwork != null
                           ? Image.file(snapshot.data[index].albumArtwork)
                           : Icon(Icons.music_note),

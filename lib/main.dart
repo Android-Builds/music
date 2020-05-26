@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
      super.initState();
     //  songModel2 = new SongModel();
      fetchSongs();
+     discoController = new StreamController();
      Timer(Duration(seconds: 2), () {
       Route route = MaterialPageRoute(builder: (context) => HomePage2());
       Navigator.pushReplacement(context, route);

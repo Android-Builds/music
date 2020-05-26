@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:music/model/song.dart';
 import 'package:music/song_model.dart';
@@ -7,3 +8,5 @@ SongModel songModel2;
 Future<List<SongInfo>> songs;
 List<SongInfo> musics = new List<SongInfo>();
 List<Song> savedsongs = new List<Song>();
+bool disco = false;
+StreamController<bool> discoController;
