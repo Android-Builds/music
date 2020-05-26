@@ -69,12 +69,18 @@ class _HomePage2State extends State<HomePage2> {
                 ),
                 IconButton(
                   onPressed: () {
+                    if(disco2) {
+                      discoController2.add(disco2 = false);
+                    }
                     discoController.add(disco = !disco);
                   },
                   icon: Icon(Icons.disc_full),
                 ),                
                 IconButton(
                   onPressed: () {
+                    if(disco) {
+                      discoController.add(disco = false);
+                    }
                     discoController2.add(disco2 = !disco2);
                   },
                   icon: Icon(Icons.party_mode),
