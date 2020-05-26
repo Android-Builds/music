@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(
-      child: SongsList(songmodel: songmodel),
+      // child: SongsList(songmodel: songmodel),
     ),
     Container(
       child: Playlists(),

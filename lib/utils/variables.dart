@@ -1,7 +1,9 @@
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music/model/song.dart';
 import 'package:music/song_model.dart';
 
 SongModel songModel2;
 //List<Song> songs = new List<Song>();
-List<SongInfo> songs = new List<SongInfo>();
+Future<List<SongInfo>> songs;
+List<SongInfo> musics = new List<SongInfo>();
+List<Song> savedsongs = new List<Song>();

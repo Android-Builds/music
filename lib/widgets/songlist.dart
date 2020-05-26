@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music/model/song.dart';
 import 'package:music/utils/variables.dart';
 
 class SongList extends StatefulWidget {
@@ -12,20 +15,60 @@ class _SongListState extends State<SongList> {
 
   void initState() {
     super.initState();
-    setState(() {
-      songlist = songs;
-    });
-    print(songlist[343].albumArtwork);
+    // setState(() {
+    //   songlist = songs;
+    // });
+    // Timer(Duration(seconds: 20), () {
+    //   songlist.forEach((element) {
+    //     if (element.isMusic) {
+    //       if (!musics.contains(element)) {
+    //         musics.add(element);
+    //       }
+    //     }
+    //     // if(element.isMusic) {
+    //     //   savedsongs.add(new Song(
+    //     //     album: element.album,
+    //     //     albumArtwork: element.albumArtwork,
+    //     //     albumID: element.albumId,
+    //     //     artist: element.albumId,
+    //     //     artistID: element.artistId,
+    //     //     duration: element.duration,
+    //     //     bookmark: element.bookmark,
+    //     //     filePath: element.filePath,
+    //     //     fileSize: element.fileSize,
+    //     //     year: element.year,
+    //     //     composer: element.composer,
+    //     //     track: element.track,
+    //     //     title: element.title
+    //     //   ));
+    //     // }
+    //   });
+    // });
+    // Timer(Duration(seconds: 1), () {
+    //   //print(savedsongs.length);
+    //   print(musics.length);
+    //   // print(songs.length);
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: songlist.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(songlist[index].title),
-          );
+    return FutureBuilder(
+        future: songs,
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data[index].title),
+                  );
+                });
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         });
   }
 }

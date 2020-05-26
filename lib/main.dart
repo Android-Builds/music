@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
 
    final FlutterAudioQuery audioQuery = FlutterAudioQuery();
 
-   fetchSongs() async {
+   fetchSongs() {
      //songs = await MusicFinder.allSongs();
-     songs = await audioQuery.getSongs();
+     songs = audioQuery.getSongs();
    }
 
    @override
